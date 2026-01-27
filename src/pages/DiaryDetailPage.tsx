@@ -1,12 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useDiaryStore } from '../store/diaryStore';
+import { useThemeStore } from '../store/themeStore';
 import MarkdownPreview from '../components/MarkdownPreview';
 import type { Mood } from '../types';
 
 export default function DiaryDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const isDark = useThemeStore((state) => state.isDark);
   const { diaries, deleteDiaryById, setEditingId } = useDiaryStore();
 
   const diary = diaries.find((d) => d.id === id);
@@ -15,7 +17,7 @@ export default function DiaryDetailPage() {
     return (
       <div className="text-center py-12">
         <p className="text-4xl mb-4">😕</p>
-        <p className="text-gray-500 dark:text-gray-400 mb-4">日记不存在</p>
+        <p className={`mb-4 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>日记不存在</p>
         <button
           onClick={() => navigate('/')}
           className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
@@ -78,43 +80,61 @@ export default function DiaryDetailPage() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-4xl mx-auto"
+      className="max-w-4xl mx-auto p-8"
     >
       {/* 返回按钮 */}
       <button
         onClick={() => navigate('/')}
-        className="mb-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center"
+        className={`mb-4 flex items-center transition-colors ${
+          isDark 
+            ? 'text-gray-400 hover:text-white' 
+            : 'text-gray-600 hover:text-gray-900'
+        }`}
       >
         ← 返回列表
       </button>
 
       {/* 日记内容 */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+      <div className={`rounded-lg shadow-lg p-8 ${
+        isDark ? 'bg-gray-800' : 'bg-white'
+      }`}>
         {/* 标题 */}
         {diary.title && (
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className={`text-3xl font-bold mb-4 ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}>
             {diary.title}
           </h1>
         )}
 
         {/* 元信息 */}
-        <div className="flex flex-wrap items-center gap-4 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-          <div className="flex items-center text-gray-600 dark:text-gray-400">
+        <div className={`flex flex-wrap items-center gap-4 mb-6 pb-6 border-b ${
+          isDark ? 'border-gray-700' : 'border-gray-200'
+        }`}>
+          <div className={`flex items-center ${
+            isDark ? 'text-gray-400' : 'text-gray-600'
+          }`}>
             <span className="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
             {formatDate(diary.createdAt)}
           </div>
 
           {diary.mood && (
-            <div className="flex items-center gap-2 px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">
+            <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${
+              isDark ? 'bg-gray-700' : 'bg-gray-100'
+            }`}>
               <span className="text-2xl">{getMoodEmoji(diary.mood)}</span>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <span className={`text-sm font-medium ${
+                isDark ? 'text-gray-300' : 'text-gray-700'
+              }`}>
                 {getMoodLabel(diary.mood)}
               </span>
             </div>
           )}
 
           {diary.weather && (
-            <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+            <div className={`flex items-center gap-1 ${
+              isDark ? 'text-gray-400' : 'text-gray-600'
+            }`}>
               <span>🌡️</span>
               <span className="text-sm">
                 {diary.weather.temp}°C {diary.weather.description}
@@ -123,7 +143,9 @@ export default function DiaryDetailPage() {
           )}
 
           {diary.location && (
-            <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+            <div className={`flex items-center gap-1 ${
+              isDark ? 'text-gray-400' : 'text-gray-600'
+            }`}>
               <span>📍</span>
               <span className="text-sm">{diary.location}</span>
             </div>
@@ -136,7 +158,11 @@ export default function DiaryDetailPage() {
             {diary.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded-full"
+                className={`px-3 py-1 text-sm rounded-full ${
+                  isDark 
+                    ? 'bg-blue-900 text-blue-200' 
+                    : 'bg-blue-100 text-blue-700'
+                }`}
               >
                 #{tag}
               </span>
@@ -160,12 +186,16 @@ export default function DiaryDetailPage() {
         )}
 
         {/* 正文 */}
-        <div className="prose prose-lg dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
-          <MarkdownPreview content={diary.content} />
+        <div className={`prose prose-lg max-w-none ${
+          isDark ? 'text-gray-200' : 'text-gray-800'
+        }`}>
+          <MarkdownPreview content={diary.content} isDark={isDark} />
         </div>
 
         {/* 操作按钮 */}
-        <div className="flex justify-end space-x-3 mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <div className={`flex justify-end space-x-3 mt-8 pt-6 border-t ${
+          isDark ? 'border-gray-700' : 'border-gray-200'
+        }`}>
           <button
             onClick={handleEdit}
             className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
@@ -183,7 +213,9 @@ export default function DiaryDetailPage() {
 
       {/* 更新时间 */}
       {diary.updatedAt !== diary.createdAt && (
-        <div className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+        <div className={`mt-4 text-center text-sm ${
+          isDark ? 'text-gray-400' : 'text-gray-500'
+        }`}>
           最后更新：{formatDate(diary.updatedAt)}
         </div>
       )}

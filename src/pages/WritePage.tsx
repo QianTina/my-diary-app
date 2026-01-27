@@ -2,15 +2,18 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useDiaryStore } from '../store/diaryStore';
+import { useThemeStore } from '../store/themeStore';
 import TagInput from '../components/TagInput';
 import MarkdownPreview from '../components/MarkdownPreview';
 import MoodSelector from '../components/MoodSelector';
 import ImageUploader from '../components/ImageUploader';
 import { getCurrentWeather, getCurrentLocation } from '../utils/weather';
+import { Eye, Edit3, X, Save } from 'lucide-react';
 import type { Mood } from '../types';
 
 export default function WritePage() {
   const navigate = useNavigate();
+  const isDark = useThemeStore((state) => state.isDark);
   const { editingId, diaries, createDiary, updateDiaryById, setEditingId, isLoading } = useDiaryStore();
 
   const [title, setTitle] = useState('');
@@ -22,7 +25,6 @@ export default function WritePage() {
 
   const DRAFT_KEY = 'diary_draft_v2';
 
-  // 加载编辑数据或草稿
   useEffect(() => {
     if (editingId) {
       const diary = diaries.find((d) => d.id === editingId);
@@ -34,7 +36,6 @@ export default function WritePage() {
         setImages(diary.images);
       }
     } else {
-      // 恢复草稿
       try {
         const draft = localStorage.getItem(DRAFT_KEY);
         if (draft) {
@@ -51,7 +52,6 @@ export default function WritePage() {
     }
   }, [editingId, diaries]);
 
-  // 草稿自动保存
   useEffect(() => {
     if (editingId) return;
     try {
@@ -71,7 +71,6 @@ export default function WritePage() {
     if (!content.trim() || isLoading) return;
 
     try {
-      // 获取环境信息
       const [weather, location] = await Promise.all([
         getCurrentWeather(),
         getCurrentLocation(),
@@ -101,14 +100,12 @@ export default function WritePage() {
         });
       }
 
-      // 清除草稿
       try {
         localStorage.removeItem(DRAFT_KEY);
       } catch {
         void 0;
       }
 
-      // 返回首页
       setEditingId(null);
       navigate('/');
     } catch (error) {
@@ -129,139 +126,112 @@ export default function WritePage() {
     navigate('/');
   };
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="max-w-4xl mx-auto"
-    >
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-        {/* 标题栏 */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            {editingId ? '✏️ 编辑日记' : '✍️ 写新日记'}
-          </h2>
-          {content && (
-            <button
-              type="button"
-              onClick={() => setIsPreview(!isPreview)}
-              className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 px-3 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-900/30"
-            >
-              {isPreview ? '📝 编辑' : '👁️ 预览'}
-            </button>
-          )}
-        </div>
+  const today = new Date().toLocaleDateString('zh-CN', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+  return (
+    <div className="min-h-screen">
+      {/* 顶部栏 */}
+      <header className={`border-b px-8 py-4 flex items-center justify-between sticky top-0 z-10 ${
+        isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'
+      }`}>
+        <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{today}</div>
+        <div className="flex items-center space-x-3">
+          <button
+            type="button"
+            onClick={() => setIsPreview(!isPreview)}
+            className={`p-2 rounded-lg transition-colors ${
+              isDark 
+                ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+            }`}
+          >
+            {isPreview ? <Edit3 className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+          </button>
+          <button
+            onClick={handleCancel}
+            className={`px-4 py-2 rounded-lg transition-colors flex items-center space-x-2 ${
+              isDark 
+                ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+            }`}
+          >
+            <X className="w-4 h-4" />
+            <span>取消</span>
+          </button>
+          <button
+            onClick={handleSubmit}
+            disabled={!content.trim() || isLoading}
+            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg flex items-center space-x-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Save className="w-4 h-4" />
+            <span>{isLoading ? '保存中...' : editingId ? '更新' : '保存'}</span>
+          </button>
+        </div>
+      </header>
+
+      <div className="p-8 max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-6"
+        >
           {/* 标题输入 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              标题（可选）
-            </label>
-            <input
-              type="text"
-              placeholder="给日记起个标题..."
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-lg"
-              disabled={isLoading}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="标题（可选）"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className={`w-full text-3xl font-bold bg-transparent border-none outline-none ${
+              isDark ? 'text-white placeholder-gray-600' : 'text-gray-900 placeholder-gray-400'
+            }`}
+            disabled={isLoading}
+          />
 
           {/* 心情选择器 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              今天心情
-            </label>
-            <MoodSelector selected={mood} onChange={setMood} />
-          </div>
+          <MoodSelector selected={mood} onChange={setMood} />
 
-          {/* 内容输入 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              内容 <span className="text-red-500">*</span>
-            </label>
-            {isPreview ? (
-              <div className="min-h-[300px] p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
-                <MarkdownPreview content={content} />
-              </div>
-            ) : (
-              <textarea
-                className="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 transition-all"
-                rows={12}
-                placeholder="今天发生了什么...（支持 Markdown 格式）"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                disabled={isLoading}
-              />
-            )}
-            <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              支持 Markdown 格式：**粗体** *斜体* `代码` [链接](URL)
+          {/* 内容输入/预览 */}
+          {isPreview ? (
+            <div className={`min-h-[400px] p-6 rounded-xl border ${
+              isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'
+            }`}>
+              <MarkdownPreview content={content} isDark={isDark} />
             </div>
-          </div>
+          ) : (
+            <textarea
+              className={`w-full min-h-[400px] p-6 border rounded-xl focus:outline-none focus:border-purple-500 resize-none transition-colors ${
+                isDark 
+                  ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500' 
+                  : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'
+              }`}
+              placeholder="开始写作...（支持 Markdown 格式）"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              disabled={isLoading}
+            />
+          )}
 
           {/* 图片上传 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              图片（最多 9 张）
-            </label>
-            <ImageUploader images={images} onChange={setImages} />
-          </div>
+          <ImageUploader images={images} onChange={setImages} />
 
           {/* 标签输入 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              标签
-            </label>
-            <TagInput tags={tags} onChange={setTags} />
-          </div>
+          <TagInput tags={tags} onChange={setTags} />
 
-          {/* 按钮组 */}
-          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <button
-              type="button"
-              onClick={handleCancel}
-              className="px-6 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-              disabled={isLoading}
-            >
-              取消
-            </button>
-            <button
-              type="submit"
-              disabled={!content.trim() || isLoading}
-              className={`px-8 py-2 text-white rounded-lg transition-all ${
-                editingId
-                  ? 'bg-green-600 hover:bg-green-700'
-                  : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:shadow-lg'
-              } disabled:opacity-50 disabled:cursor-not-allowed`}
-            >
-              {isLoading ? (
-                <span className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  保存中...
-                </span>
-              ) : editingId ? (
-                '✓ 确认更新'
-              ) : (
-                '✓ 立即记录'
-              )}
-            </button>
+          {/* 提示信息 */}
+          <div className={`p-4 rounded-lg text-sm border ${
+            isDark 
+              ? 'bg-gray-800/50 text-gray-400 border-gray-700' 
+              : 'bg-blue-50 text-blue-700 border-blue-200'
+          }`}>
+            💡 保存时会自动获取当前天气和位置信息
           </div>
-        </form>
+        </motion.div>
       </div>
-
-      {/* 提示信息 */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-700 dark:text-blue-300"
-      >
-        💡 <strong>提示：</strong>保存时会自动获取当前天气和位置信息，内容会自动保存为草稿
-      </motion.div>
-    </motion.div>
+    </div>
   );
 }

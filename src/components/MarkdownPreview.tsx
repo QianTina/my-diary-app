@@ -2,9 +2,10 @@ import ReactMarkdown from 'react-markdown';
 
 interface MarkdownPreviewProps {
   content: string;
+  isDark?: boolean;
 }
 
-export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
+export default function MarkdownPreview({ content, isDark = false }: MarkdownPreviewProps) {
   return (
     <div className="prose prose-sm max-w-none">
       <ReactMarkdown
@@ -20,15 +21,30 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
           strong: ({ children }) => <strong className="font-bold">{children}</strong>,
           em: ({ children }) => <em className="italic">{children}</em>,
           a: ({ children, href }) => (
-            <a href={href} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+            <a 
+              href={href} 
+              className={isDark ? 'text-blue-400 hover:underline' : 'text-blue-600 hover:underline'} 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
               {children}
             </a>
           ),
           code: ({ children }) => (
-            <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">{children}</code>
+            <code className={`px-1 py-0.5 rounded text-sm font-mono ${
+              isDark ? 'bg-gray-700 text-gray-200' : 'bg-gray-100 text-gray-800'
+            }`}>
+              {children}
+            </code>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-700">{children}</blockquote>
+            <blockquote className={`border-l-4 pl-4 italic ${
+              isDark 
+                ? 'border-gray-600 text-gray-300' 
+                : 'border-gray-300 text-gray-700'
+            }`}>
+              {children}
+            </blockquote>
           ),
         }}
       >

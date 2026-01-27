@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { KeyboardEvent } from 'react';
+import { X } from 'lucide-react';
 
 interface TagInputProps {
   tags: string[];
@@ -13,13 +14,12 @@ export default function TagInput({ tags, onChange, placeholder = '添加标签�
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && input.trim()) {
       e.preventDefault();
-      const newTag = input.trim().replace(/^#/, ''); // 移除开头的 #
+      const newTag = input.trim().replace(/^#/, '');
       if (!tags.includes(newTag)) {
         onChange([...tags, newTag]);
       }
       setInput('');
     } else if (e.key === 'Backspace' && !input && tags.length > 0) {
-      // 删除最后一个标签
       onChange(tags.slice(0, -1));
     }
   };
@@ -29,19 +29,19 @@ export default function TagInput({ tags, onChange, placeholder = '添加标签�
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-2 p-2 border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent">
+    <div className="flex flex-wrap items-center gap-2 p-3 bg-gray-800 border border-gray-700 rounded-lg focus-within:border-purple-500 transition-colors">
       {tags.map((tag) => (
         <span
           key={tag}
-          className="inline-flex items-center gap-1 px-2 py-1 text-sm bg-blue-100 text-blue-700 rounded-full"
+          className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-purple-500/20 text-purple-300 rounded-full"
         >
           #{tag}
           <button
             type="button"
             onClick={() => removeTag(tag)}
-            className="hover:text-blue-900 focus:outline-none"
+            className="hover:text-purple-100 focus:outline-none"
           >
-            ×
+            <X className="w-3 h-3" />
           </button>
         </span>
       ))}
@@ -51,7 +51,7 @@ export default function TagInput({ tags, onChange, placeholder = '添加标签�
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={tags.length === 0 ? placeholder : ''}
-        className="flex-1 min-w-[120px] outline-none text-sm"
+        className="flex-1 min-w-[120px] bg-transparent outline-none text-sm text-white placeholder-gray-500"
       />
     </div>
   );

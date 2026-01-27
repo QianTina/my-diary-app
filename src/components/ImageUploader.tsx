@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Upload, X } from 'lucide-react';
 
 interface ImageUploaderProps {
   images: string[];
@@ -20,7 +21,6 @@ export default function ImageUploader({ images, onChange, maxImages = 9 }: Image
 
     setUploading(true);
     try {
-      // 转换为 Base64（简化版，生产环境应上传到云存储）
       const base64Images = await Promise.all(
         files.map((file) => {
           return new Promise<string>((resolve, reject) => {
@@ -38,7 +38,7 @@ export default function ImageUploader({ images, onChange, maxImages = 9 }: Image
       alert('图片上传失败');
     } finally {
       setUploading(false);
-      e.target.value = ''; // 重置 input
+      e.target.value = '';
     }
   };
 
@@ -48,26 +48,22 @@ export default function ImageUploader({ images, onChange, maxImages = 9 }: Image
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-gray-600">图片：</span>
-        <label className="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 cursor-pointer transition-colors">
-          {uploading ? '上传中...' : '📷 添加图片'}
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleFileChange}
-            disabled={uploading || images.length >= maxImages}
-            className="hidden"
-          />
-        </label>
-        <span className="text-xs text-gray-500">
-          {images.length}/{maxImages}
-        </span>
-      </div>
+      <label className="inline-flex items-center space-x-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg cursor-pointer transition-colors">
+        <Upload className="w-4 h-4" />
+        <span className="text-sm">{uploading ? '上传中...' : '添加图片'}</span>
+        <span className="text-xs text-gray-500">({images.length}/{maxImages})</span>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleFileChange}
+          disabled={uploading || images.length >= maxImages}
+          className="hidden"
+        />
+      </label>
 
       {images.length > 0 && (
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-3">
           {images.map((img, index) => (
             <div key={index} className="relative group aspect-square">
               <img
@@ -78,9 +74,9 @@ export default function ImageUploader({ images, onChange, maxImages = 9 }: Image
               <button
                 type="button"
                 onClick={() => removeImage(index)}
-                className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-sm"
+                className="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
               >
-                ×
+                <X className="w-4 h-4" />
               </button>
             </div>
           ))}

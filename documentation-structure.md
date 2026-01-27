@@ -10,32 +10,32 @@
 
 ```
 my-diary-app/
-├── README.md                    # 项目主页 ⭐
+├── readme.md                    # 项目主页 ⭐
 ├── .env.example                 # 环境变量模板
 ├── fix-security.sh              # 安全修复脚本
 │
 └── docs/                        # 📚 文档目录
-    ├── README.md                # 文档导航 ⭐
+    ├── readme.md                # 文档导航 ⭐
     │
-    ├── COMPLETED_SUMMARY.md     # 项目完成总结 ⭐
-    ├── QUICKSTART.md            # 快速开始指南
+    ├── completed-summary.md     # 项目完成总结 ⭐
+    ├── quickstart.md            # 快速开始指南
     │
     ├── security/                # 🔒 安全文档
-    │   ├── SECURITY_SUMMARY.md      # 安全总结 ⭐
-    │   ├── SECURITY_QUICKFIX.md     # 快速修复
-    │   ├── SECURITY_GUIDE.md        # 完整指南
-    │   └── URGENT_SECURITY_ACTION.md
+    │   ├── security-summary.md      # 安全总结 ⭐
+    │   ├── security-quickfix.md     # 快速修复
+    │   ├── security-guide.md        # 完整指南
+    │   └── urgent-security-action.md
     │
     ├── theme/                   # 🎨 主题文档
-    │   ├── THEME_FINAL_FIX.md       # 最终方案 ⭐
-    │   ├── THEME_FIX_COMPLETE.md
-    │   └── THEME_TOGGLE_FIXED.md
+    │   ├── theme-final-fix.md       # 最终方案 ⭐
+    │   ├── theme-fix-complete.md
+    │   └── theme-toggle-fixed.md
     │
     ├── project-history/         # 📜 历史记录
-    │   ├── PROJECT_COMPLETE.md
-    │   ├── V2_COMPLETE.md
-    │   ├── MULTI_PAGE_COMPLETE.md
-    │   └── QUICK_FIX.md
+    │   ├── project-complete.md
+    │   ├── v2-complete.md
+    │   ├── multi-page-complete.md
+    │   └── quick-fix.md
     │
     ├── design.md                # 设计文档
     ├── design_v2.md
@@ -60,17 +60,17 @@ my-diary-app/
 
 ### 从根目录开始
 
-1. **[README.md](./README.md)** - 项目介绍和快速开始
-2. **[docs/README.md](./docs/README.md)** - 完整文档导航
+1. **[readme.md](./readme.md)** - 项目介绍和快速开始
+2. **[docs/readme.md](./docs/readme.md)** - 完整文档导航
 
 ### 常用文档
 
 | 需求 | 文档路径 |
 |------|---------|
-| 了解项目 | [docs/COMPLETED_SUMMARY.md](./docs/COMPLETED_SUMMARY.md) |
-| 快速开始 | [docs/QUICKSTART.md](./docs/QUICKSTART.md) |
-| 安全配置 | [docs/security/SECURITY_SUMMARY.md](./docs/security/SECURITY_SUMMARY.md) |
-| 主题实现 | [docs/theme/THEME_FINAL_FIX.md](./docs/theme/THEME_FINAL_FIX.md) |
+| 了解项目 | [docs/completed-summary.md](./docs/completed-summary.md) |
+| 快速开始 | [docs/quickstart.md](./docs/quickstart.md) |
+| 安全配置 | [docs/security/security-summary.md](./docs/security/security-summary.md) |
+| 主题实现 | [docs/theme/theme-final-fix.md](./docs/theme/theme-final-fix.md) |
 | 部署上线 | [docs/deployment.md](./docs/deployment.md) |
 
 ---
@@ -87,7 +87,7 @@ my-diary-app/
 - 完整安全指南
 - 紧急操作指南
 
-**推荐阅读：** SECURITY_SUMMARY.md
+**推荐阅读：** security-summary.md
 
 ### 🎨 theme/ - 主题文档
 
@@ -99,7 +99,7 @@ my-diary-app/
 - 问题诊断和解决方案
 - 实现细节
 
-**推荐阅读：** THEME_FINAL_FIX.md
+**推荐阅读：** theme-final-fix.md
 
 ### 📜 project-history/ - 历史记录
 
@@ -119,16 +119,16 @@ my-diary-app/
 
 ### 方法 1: 使用文档导航
 
-访问 [docs/README.md](./docs/README.md)，里面有完整的文档目录和推荐阅读路径。
+访问 [docs/readme.md](./docs/readme.md)，里面有完整的文档目录和推荐阅读路径。
 
 ### 方法 2: 按需求查找
 
 | 我想... | 查看文档 |
 |---------|---------|
-| 了解项目整体 | docs/COMPLETED_SUMMARY.md |
-| 开始使用 | docs/QUICKSTART.md |
-| 配置安全 | docs/security/SECURITY_SUMMARY.md |
-| 理解主题 | docs/theme/THEME_FINAL_FIX.md |
+| 了解项目整体 | docs/completed-summary.md |
+| 开始使用 | docs/quickstart.md |
+| 配置安全 | docs/security/security-summary.md |
+| 理解主题 | docs/theme/theme-final-fix.md |
 | 部署项目 | docs/deployment.md |
 | 配置数据库 | docs/supabase-migration.md |
 | 查看功能 | docs/features.md |
@@ -152,8 +152,8 @@ my-diary-app/
 
 1. 确定文档类型
 2. 放入对应文件夹
-3. 更新 `docs/README.md` 的目录
-4. 如果是重要文档，更新根目录 `README.md`
+3. 更新 `docs/readme.md` 的目录
+4. 如果是重要文档，更新根目录 `readme.md`
 
 ### 文档分类规则
 
@@ -174,20 +174,20 @@ my-diary-app/
 
 ```
 my-diary-app/
-├── README.md
-├── PROJECT_COMPLETE.md
-├── V2_COMPLETE.md
-├── MULTI_PAGE_COMPLETE.md
-├── QUICK_FIX.md
-├── QUICKSTART.md
-├── SECURITY_GUIDE.md
-├── SECURITY_QUICKFIX.md
-├── SECURITY_SUMMARY.md
-├── URGENT_SECURITY_ACTION.md
-├── THEME_FINAL_FIX.md
-├── THEME_FIX_COMPLETE.md
-├── THEME_TOGGLE_FIXED.md
-├── COMPLETED_SUMMARY.md
+├── readme.md
+├── project-complete.md
+├── v2-complete.md
+├── multi-page-complete.md
+├── quick-fix.md
+├── quickstart.md
+├── security-guide.md
+├── security-quickfix.md
+├── security-summary.md
+├── urgent-security-action.md
+├── theme-final-fix.md
+├── theme-fix-complete.md
+├── theme-toggle-fixed.md
+├── completed-summary.md
 └── docs/
     ├── design.md
     ├── design_v2.md
@@ -203,11 +203,11 @@ my-diary-app/
 
 ```
 my-diary-app/
-├── README.md                    # 项目入口
+├── readme.md                    # 项目入口
 ├── .env.example                 # 配置模板
 ├── fix-security.sh              # 工具脚本
 └── docs/                        # 所有文档
-    ├── README.md                # 文档导航
+    ├── readme.md                # 文档导航
     ├── security/                # 安全文档
     ├── theme/                   # 主题文档
     └── project-history/         # 历史记录
@@ -236,8 +236,8 @@ my-diary-app/
 - 清晰了解项目结构
 
 **推荐从这里开始：**
-- 📖 [docs/README.md](./docs/README.md) - 文档导航
-- 📖 [docs/COMPLETED_SUMMARY.md](./docs/COMPLETED_SUMMARY.md) - 项目总结
+- 📖 [docs/readme.md](./docs/readme.md) - 文档导航
+- 📖 [docs/completed-summary.md](./docs/completed-summary.md) - 项目总结
 
 ---
 

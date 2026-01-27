@@ -103,12 +103,12 @@ VITE_SUPABASE_ANON_KEY=your_anon_key
 
 完整的项目文档请查看 [docs/](./docs/) 目录：
 
-- **[项目完成总结](./docs/COMPLETED_SUMMARY.md)** - 项目全貌 ⭐
-- **[快速开始](./docs/QUICKSTART.md)** - 快速上手指南
-- **[安全指南](./docs/security/SECURITY_SUMMARY.md)** - 环境变量保护
-- **[主题实现](./docs/theme/THEME_FINAL_FIX.md)** - 主题切换方案
+- **[项目完成总结](./docs/completed-summary.md)** - 项目全貌 ⭐
+- **[快速开始](./docs/quickstart.md)** - 快速上手指南
+- **[安全指南](./docs/security/security-summary.md)** - 环境变量保护
+- **[主题实现](./docs/theme/theme-final-fix.md)** - 主题切换方案
 - **[部署指南](./docs/deployment.md)** - 生产环境部署
-- **[更多文档](./docs/README.md)** - 完整文档目录
+- **[更多文档](./docs/readme.md)** - 完整文档目录
 
 ## 🔮 未来计划
 
@@ -126,7 +126,7 @@ VITE_SUPABASE_ANON_KEY=your_anon_key
 如需配置 Supabase：
 1. 复制 `.env.example` 为 `.env`
 2. 填入你的 Supabase 配置
-3. 查看 [安全指南](./docs/security/SECURITY_SUMMARY.md) 了解更多
+3. 查看 [安全指南](./docs/security/security-summary.md) 了解更多
 
 ## 📄 许可证
 

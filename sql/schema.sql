@@ -1,8 +1,16 @@
 -- 创建日记表
 create table diaries (
   id uuid default gen_random_uuid() primary key,
+  title text default '',
   content text not null,
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+  mood text check (mood in ('happy', 'sad', 'neutral', 'calm', 'angry')),
+  weather jsonb,
+  location text default '',
+  tags text[] default '{}',
+  images text[] default '{}',
+  is_encrypted boolean default false,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
 -- 设置行级安全策略 (RLS)

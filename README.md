@@ -99,13 +99,34 @@ VITE_SUPABASE_ANON_KEY=your_anon_key
 2. 选择之前导出的 JSON 文件
 3. 确认导入即可
 
+## 📚 文档
+
+完整的项目文档请查看 [docs/](./docs/) 目录：
+
+- **[项目完成总结](./docs/COMPLETED_SUMMARY.md)** - 项目全貌 ⭐
+- **[快速开始](./docs/QUICKSTART.md)** - 快速上手指南
+- **[安全指南](./docs/security/SECURITY_SUMMARY.md)** - 环境变量保护
+- **[主题实现](./docs/theme/THEME_FINAL_FIX.md)** - 主题切换方案
+- **[部署指南](./docs/deployment.md)** - 生产环境部署
+- **[更多文档](./docs/README.md)** - 完整文档目录
+
 ## 🔮 未来计划
 
 - 📅 日历视图
-- 🖼️ 图片上传支持
-- 🎨 主题切换（深色模式）
-- 📱 响应式优化
+- 🎨 更多主题选项
+- 📊 数据统计和可视化
+- 🤖 AI 智能助手
 - 🔐 用户认证系统
+- 📱 PWA 支持
+
+## 🔒 安全
+
+本项目已配置环境变量保护，`.env` 文件不会被提交到 Git。
+
+如需配置 Supabase：
+1. 复制 `.env.example` 为 `.env`
+2. 填入你的 Supabase 配置
+3. 查看 [安全指南](./docs/security/SECURITY_SUMMARY.md) 了解更多
 
 ## 📄 许可证
 

@@ -11,7 +11,9 @@ import {
   BookOpen,
   Tag,
   MapPin,
-  Thermometer
+  Thermometer,
+  Search,
+  X
 } from 'lucide-react';
 import type { Diary, Mood } from '../types';
 
@@ -27,12 +29,24 @@ export default function ArchivePage() {
   const navigate = useNavigate();
   const [expandedYears, setExpandedYears] = useState<Set<string>>(new Set());
   const [expandedMonths, setExpandedMonths] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // 过滤日记
+  const filteredDiaries = useMemo(() => {
+    if (!searchQuery.trim()) return diaries;
+    
+    const query = searchQuery.toLowerCase();
+    return diaries.filter(diary => {
+      const searchableText = `${diary.title} ${diary.content} ${diary.tags.join(' ')}`.toLowerCase();
+      return searchableText.includes(query);
+    });
+  }, [diaries, searchQuery]);
 
   // 按年月分组
   const groupedDiaries = useMemo(() => {
     const grouped: GroupedDiaries = {};
 
-    diaries.forEach(diary => {
+    filteredDiaries.forEach(diary => {
       const date = new Date(diary.createdAt);
       const year = date.getFullYear().toString();
       const monthKey = `${year}-${String(date.getMonth() + 1).padStart(2, '0')}`;
@@ -47,7 +61,7 @@ export default function ArchivePage() {
     });
 
     return grouped;
-  }, [diaries]);
+  }, [filteredDiaries]);
 
   const years = Object.keys(groupedDiaries).sort((a, b) => parseInt(b) - parseInt(a));
 
@@ -116,6 +130,58 @@ export default function ArchivePage() {
           </p>
         </motion.div>
 
+        {/* 搜索框 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="mb-6"
+        >
+          <div className="flex gap-3">
+            <div className="relative flex-1">
+              <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
+                isDark ? 'text-gray-500' : 'text-gray-400'
+              }`} />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="在归档中搜索... Search in archive..."
+                className={`w-full pl-12 pr-12 py-3 border rounded-lg focus:outline-none focus:border-purple-500 transition-colors ${
+                  isDark 
+                    ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500' 
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'
+                }`}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className={`absolute right-4 top-1/2 transform -translate-y-1/2 p-1 rounded-full transition-colors ${
+                    isDark
+                      ? 'text-gray-500 hover:text-white hover:bg-gray-700'
+                      : 'text-gray-400 hover:text-gray-900 hover:bg-gray-100'
+                  }`}
+                  aria-label="清除搜索"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+            <button
+              onClick={() => navigate('/search')}
+              className={`px-4 py-3 rounded-lg border transition-colors whitespace-nowrap flex items-center gap-2 ${
+                isDark
+                  ? 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700 hover:border-purple-500'
+                  : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-purple-500'
+              }`}
+              title="打开高级搜索 (Cmd/Ctrl+K)"
+            >
+              <Search className="w-4 h-4" />
+              <span className="hidden sm:inline">高级搜索</span>
+            </button>
+          </div>
+        </motion.div>
+
         {/* 统计信息 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -129,7 +195,15 @@ export default function ArchivePage() {
             <div className="flex items-center gap-2">
               <BookOpen className={`w-5 h-5 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} />
               <span className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                共 <span className="font-bold">{diaries.length}</span> 篇日记
+                {searchQuery ? (
+                  <>
+                    找到 <span className="font-bold">{filteredDiaries.length}</span> / {diaries.length} 篇日记
+                  </>
+                ) : (
+                  <>
+                    共 <span className="font-bold">{diaries.length}</span> 篇日记
+                  </>
+                )}
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -313,8 +387,27 @@ export default function ArchivePage() {
               className={`text-center py-12 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
             >
               <BookOpen className="w-16 h-16 mx-auto mb-4 opacity-50" />
-              <p className="text-lg">还没有日记 No diaries yet</p>
-              <p className="text-sm mt-2">开始记录你的生活吧！</p>
+              {searchQuery ? (
+                <>
+                  <p className="text-lg">未找到匹配的日记 No matching diaries</p>
+                  <p className="text-sm mt-2">尝试使用不同的关键词</p>
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className={`mt-4 px-4 py-2 rounded-lg transition-colors ${
+                      isDark
+                        ? 'bg-gray-800 hover:bg-gray-700 text-white'
+                        : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+                    }`}
+                  >
+                    清除搜索
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="text-lg">还没有日记 No diaries yet</p>
+                  <p className="text-sm mt-2">开始记录你的生活吧！</p>
+                </>
+              )}
             </motion.div>
           )}
         </div>

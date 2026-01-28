@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from './pages/HomePage';
@@ -8,9 +8,30 @@ import DiaryDetailPage from './pages/DiaryDetailPage';
 import SettingsPage from './pages/SettingsPage';
 import StatsPage from './pages/StatsPage';
 import ArchivePage from './pages/ArchivePage';
+import SearchPage from './pages/SearchPage';
 import LoginPage from './pages/auth/LoginPage';
 import { ProfilePage } from './pages/auth/ProfilePage';
 import { useAuthStore } from './store/authStore';
+
+// 键盘快捷键组件
+function KeyboardShortcuts() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd+K (Mac) 或 Ctrl+K (Windows/Linux) 打开搜索
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        navigate('/search');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [navigate]);
+
+  return null;
+}
 
 function App() {
   const { initialize } = useAuthStore();
@@ -22,6 +43,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <KeyboardShortcuts />
       <Routes>
         {/* 公共路由 - 登录页面 */}
         <Route path="/login" element={<LoginPage />} />
@@ -32,6 +54,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="write" element={<WritePage />} />
             <Route path="diary/:id" element={<DiaryDetailPage />} />
+            <Route path="search" element={<SearchPage />} />
             <Route path="archive" element={<ArchivePage />} />
             <Route path="stats" element={<StatsPage />} />
             <Route path="settings" element={<SettingsPage />} />

@@ -157,21 +157,35 @@ export default function HomePage() {
         {/* 搜索和筛选 */}
         <div className="mb-6 space-y-4">
           {/* 搜索框 */}
-          <div className="relative">
-            <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
-              isDark ? 'text-gray-500' : 'text-gray-400'
-            }`} />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="搜索日记内容..."
-              className={`w-full pl-12 pr-4 py-3 border rounded-lg focus:outline-none focus:border-purple-500 transition-colors ${
-                isDark 
-                  ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500' 
-                  : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'
+          <div className="flex gap-3">
+            <div className="relative flex-1">
+              <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
+                isDark ? 'text-gray-500' : 'text-gray-400'
+              }`} />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="快速搜索日记内容... Quick search..."
+                className={`w-full pl-12 pr-4 py-3 border rounded-lg focus:outline-none focus:border-purple-500 transition-colors ${
+                  isDark 
+                    ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500' 
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'
+                }`}
+              />
+            </div>
+            <button
+              onClick={() => navigate('/search')}
+              className={`px-4 py-3 rounded-lg border transition-colors whitespace-nowrap flex items-center gap-2 ${
+                isDark
+                  ? 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700 hover:border-purple-500'
+                  : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-purple-500'
               }`}
-            />
+              title="打开高级搜索 (Cmd/Ctrl+K)"
+            >
+              <Search className="w-4 h-4" />
+              <span className="hidden sm:inline">高级搜索</span>
+            </button>
           </div>
 
           {/* 标签筛选 */}

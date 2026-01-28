@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Home, PenLine, Archive, BarChart3, Settings, Sparkles } from 'lucide-react';
+import { Home, PenLine, Archive, BarChart3, Settings, Sparkles, Search } from 'lucide-react';
 import { useThemeStore } from '../store/themeStore';
 import { UserMenu } from './UserMenu';
 
@@ -9,6 +9,7 @@ export default function Sidebar() {
   const navItems = [
     { path: '/', icon: Home, label: '动态', enLabel: 'Dashboard' },
     { path: '/write', icon: PenLine, label: '写作', enLabel: 'Write' },
+    { path: '/search', icon: Search, label: '搜索', enLabel: 'Search' },
     { path: '/archive', icon: Archive, label: '归档', enLabel: 'Archive' },
     { path: '/stats', icon: BarChart3, label: '统计', enLabel: 'Stats' },
   ];

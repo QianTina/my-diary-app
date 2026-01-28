@@ -17,6 +17,8 @@ export interface Weather {
 export interface Diary {
   /** 唯一标识符 */
   id: string;
+  /** 用户 ID - 外键指向 auth.users */
+  user_id?: string;
   /** 标题 */
   title: string;
   /** 日记内容 */
@@ -41,6 +43,7 @@ export interface Diary {
 
 export interface DiaryRow {
   id: string;
+  user_id?: string;
   title: string;
   content: string;
   mood: Mood | null;

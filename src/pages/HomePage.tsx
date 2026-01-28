@@ -3,14 +3,17 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useDiaryStore } from '../store/diaryStore';
 import { useThemeStore } from '../store/themeStore';
-import { Search, Plus, Tag, Calendar, MapPin, Thermometer, Edit2, Trash2, Sun, Moon } from 'lucide-react';
+import { Header } from '../components/Header';
+import { ConfirmDialog } from '../components/ConfirmDialog';
+import { Toast } from '../components/Toast';
+import { LoadingOverlay } from '../components/LoadingOverlay';
+import { Search, Plus, Tag, Calendar, MapPin, Thermometer, Edit2, Trash2 } from 'lucide-react';
 import MarkdownPreview from '../components/MarkdownPreview';
 import type { Mood } from '../types';
 
 export default function HomePage() {
   const navigate = useNavigate();
   const isDark = useThemeStore((state) => state.isDark);
-  const toggleTheme = useThemeStore((state) => state.toggleTheme);
   const {
     diaries,
     isLoading,
@@ -26,19 +29,50 @@ export default function HomePage() {
   } = useDiaryStore();
 
   const [currentPrompt] = useState('今天的核心主题是...');
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [toast, setToast] = useState<{ isOpen: boolean; message: string; type: 'success' | 'error' | 'info' }>({
+    isOpen: false,
+    message: '',
+    type: 'info',
+  });
 
   const handleEdit = (id: string) => {
     setEditingId(id);
     navigate('/write');
   };
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm('确定要删除这条日记吗？')) return;
+  const handleDeleteClick = (id: string) => {
+    setDeletingId(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deletingId) return;
+    
+    setIsDeleting(true);
+    setDeleteDialogOpen(false);
+    
     try {
-      await deleteDiaryById(id);
+      await deleteDiaryById(deletingId);
+      
+      // 先关闭 loading
+      setIsDeleting(false);
+      
+      // 显示成功提示
+      setToast({ isOpen: true, message: '✅ 日记已删除 Diary deleted successfully', type: 'success' });
     } catch {
-      alert('删除失败');
+      setIsDeleting(false);
+      setToast({ isOpen: true, message: '❌ 删除失败，请重试 Delete failed, please retry', type: 'error' });
+    } finally {
+      setDeletingId(null);
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+    setDeletingId(null);
   };
 
   const formatDate = (isoString: string) => {
@@ -64,41 +98,24 @@ export default function HomePage() {
 
   const filteredDiaries = getFilteredDiaries();
   const allTags = getAllTags();
-  const today = new Date().toLocaleDateString('zh-CN', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
 
   return (
     <div className="min-h-screen">
       {/* 顶部栏 */}
-      <header className={`border-b px-8 py-4 flex items-center justify-between sticky top-0 z-10 ${
+      <Header />
+      
+      {/* 顶部操作栏 */}
+      <div className={`border-b px-8 py-4 flex items-center justify-end ${
         isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'
       }`}>
-        <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{today}</div>
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={toggleTheme}
-            className={`p-2 rounded-lg transition-colors ${
-              isDark 
-                ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-            }`}
-            title={isDark ? '切换到浅色模式' : '切换到深色模式'}
-          >
-            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
-          <button
-            onClick={() => navigate('/write')}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg flex items-center space-x-2 transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-            <span>提笔</span>
-          </button>
-        </div>
-      </header>
+        <button
+          onClick={() => navigate('/write')}
+          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg flex items-center space-x-2 transition-colors"
+        >
+          <Plus className="w-4 h-4" />
+          <span>提笔</span>
+        </button>
+      </div>
 
       <div className="p-8 max-w-6xl mx-auto">
         {/* 写作提示卡片 */}
@@ -274,7 +291,7 @@ export default function HomePage() {
                       <Edit2 className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => handleDelete(diary.id)}
+                      onClick={() => handleDeleteClick(diary.id)}
                       className={`p-2 rounded-lg transition-colors ${
                         isDark 
                           ? 'text-gray-400 hover:text-red-400 hover:bg-gray-700' 
@@ -344,6 +361,32 @@ export default function HomePage() {
           )}
         </div>
       </div>
+
+      {/* 确认删除对话框 */}
+      <ConfirmDialog
+        isOpen={deleteDialogOpen}
+        title="删除日记 Delete Diary"
+        message="确定要删除这条日记吗？此操作无法撤销。Are you sure you want to delete this diary? This action cannot be undone."
+        confirmText="删除 Delete"
+        cancelText="取消 Cancel"
+        variant="danger"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+      />
+
+      {/* Loading 遮罩 */}
+      <LoadingOverlay 
+        isOpen={isDeleting} 
+        message="正在删除日记... Deleting diary..."
+      />
+
+      {/* Toast 通知 */}
+      <Toast
+        isOpen={toast.isOpen}
+        message={toast.message}
+        type={toast.type}
+        onClose={() => setToast({ ...toast, isOpen: false })}
+      />
     </div>
   );
 }

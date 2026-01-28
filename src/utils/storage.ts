@@ -3,6 +3,7 @@ import type { Diary, DiaryRow } from '../types';
 
 const mapToDiary = (item: DiaryRow): Diary => ({
   id: item.id,
+  user_id: item.user_id,
   title: item.title || '',
   content: item.content,
   mood: item.mood,
@@ -65,9 +66,17 @@ export const addDiary = async (diary: Omit<Diary, 'id' | 'createdAt' | 'updatedA
     writeLocal(list);
     return Promise.resolve(newItem);
   }
+  
+  // 获取当前用户
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) {
+    throw new Error('未认证：请先登录');
+  }
+  
   const { data, error } = await supabase
     .from('diaries')
     .insert([{
+      user_id: user.id,
       title: diary.title,
       content: diary.content,
       mood: diary.mood,

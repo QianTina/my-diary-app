@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { Home, PenLine, Archive, BarChart3, Settings, Sparkles } from 'lucide-react';
 import { useThemeStore } from '../store/themeStore';
+import { UserMenu } from './UserMenu';
 
 export default function Sidebar() {
   const isDark = useThemeStore((state) => state.isDark);
@@ -74,15 +75,9 @@ export default function Sidebar() {
           </div>
         </NavLink>
 
-        {/* User Info */}
-        <div className="mt-4 flex items-center space-x-3 px-4 py-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-sm">
-            T
-          </div>
-          <div className="flex-1">
-            <div className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Tina</div>
-            <div className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>Dev</div>
-          </div>
+        {/* User Menu */}
+        <div className="mt-4">
+          <UserMenu />
         </div>
       </div>
     </aside>

@@ -6,6 +6,8 @@ import HomePage from './pages/HomePage';
 import WritePage from './pages/WritePage';
 import DiaryDetailPage from './pages/DiaryDetailPage';
 import SettingsPage from './pages/SettingsPage';
+import StatsPage from './pages/StatsPage';
+import ArchivePage from './pages/ArchivePage';
 import LoginPage from './pages/auth/LoginPage';
 import { ProfilePage } from './pages/auth/ProfilePage';
 import { useAuthStore } from './store/authStore';
@@ -30,6 +32,8 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="write" element={<WritePage />} />
             <Route path="diary/:id" element={<DiaryDetailPage />} />
+            <Route path="archive" element={<ArchivePage />} />
+            <Route path="stats" element={<StatsPage />} />
             <Route path="settings" element={<SettingsPage />} />
             <Route path="profile" element={<ProfilePage />} />
           </Route>

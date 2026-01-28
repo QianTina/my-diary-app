@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useDiaryStore } from '../store/diaryStore';
 import { exportToJSON, exportToMarkdown, importFromJSON } from '../utils/export';
 import { useThemeStore } from '../store/themeStore';
-import { Download, Upload, FileJson, FileText, Trash2, Info } from 'lucide-react';
+import { Download, Upload, FileJson, FileText, Trash2, Info, Database } from 'lucide-react';
 
 export default function SettingsPage() {
   const { diaries, createDiary } = useDiaryStore();
@@ -67,7 +67,7 @@ export default function SettingsPage() {
           <h2 className={`text-xl font-bold mb-6 flex items-center space-x-2 ${
             isDark ? 'text-white' : 'text-gray-900'
           }`}>
-            <span>💾</span>
+            <Database className="w-6 h-6 text-purple-500" />
             <span>数据管理</span>
           </h2>
           

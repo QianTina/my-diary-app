@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useDiaryStore } from '../store/diaryStore';
 import { useThemeStore } from '../store/themeStore';
 import { Header } from '../components/Header';
+import { MoodIcon } from '../components/MoodIcon';
 import { 
   BookOpen, 
   TrendingUp, 
@@ -12,13 +13,13 @@ import {
   BarChart3,
   Clock,
   Smile,
-  Meh,
-  Frown,
-  Angry as AngryIcon,
-  Heart,
   Settings,
   Eye,
-  EyeOff
+  EyeOff,
+  Trophy,
+  Flame,
+  Star,
+  BookMarked
 } from 'lucide-react';
 import {
   getTotalWords,
@@ -72,12 +73,12 @@ export default function StatsPage() {
     longestDiary: getLongestDiary(diaries),
   }), [diaries]);
 
-  const moodIcons = {
-    happy: { icon: Smile, color: 'text-green-400', label: '开心 Happy' },
-    calm: { icon: Heart, color: 'text-blue-400', label: '平静 Calm' },
-    neutral: { icon: Meh, color: 'text-gray-400', label: '一般 Neutral' },
-    sad: { icon: Frown, color: 'text-yellow-400', label: '难过 Sad' },
-    angry: { icon: AngryIcon, color: 'text-red-400', label: '生气 Angry' },
+  const moodConfig = {
+    happy: { color: 'text-yellow-500', label: '开心 Happy' },
+    calm: { color: 'text-blue-400', label: '平静 Calm' },
+    neutral: { color: 'text-gray-400', label: '一般 Neutral' },
+    sad: { color: 'text-indigo-400', label: '难过 Sad' },
+    angry: { color: 'text-red-400', label: '生气 Angry' },
   };
 
   const maxMoodCount = Math.max(...Object.values(stats.moodDistribution));
@@ -115,8 +116,9 @@ export default function StatsPage() {
           className="mb-8 flex items-center justify-between"
         >
           <div>
-            <h1 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              📊 写作统计 Writing Statistics
+            <h1 className={`text-3xl font-bold mb-2 flex items-center gap-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <BarChart3 className="w-8 h-8" />
+              写作统计 Writing Statistics
             </h1>
             <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
               记录你的写作旅程 Track your writing journey
@@ -299,14 +301,14 @@ export default function StatsPage() {
             </h3>
             <div className="space-y-4">
               {Object.entries(stats.moodDistribution).map(([mood, count]) => {
-                const { icon: Icon, color, label } = moodIcons[mood as keyof typeof moodIcons];
+                const { color, label } = moodConfig[mood as keyof typeof moodConfig];
                 const percentage = maxMoodCount > 0 ? (count / maxMoodCount) * 100 : 0;
                 
                 return (
                   <div key={mood}>
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <Icon className={`w-5 h-5 ${color}`} />
+                        <MoodIcon mood={mood} className={`w-5 h-5 ${color}`} />
                         <span className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                           {label}
                         </span>
@@ -452,7 +454,7 @@ export default function StatsPage() {
                 <div className={`flex items-center gap-3 p-3 rounded-lg ${
                   isDark ? 'bg-gray-700/50' : 'bg-gray-50'
                 }`}>
-                  <span className="text-2xl">🎉</span>
+                  <Trophy className="w-8 h-8 text-yellow-500" />
                   <div>
                     <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       初次记录 First Entry
@@ -467,7 +469,7 @@ export default function StatsPage() {
                 <div className={`flex items-center gap-3 p-3 rounded-lg ${
                   isDark ? 'bg-gray-700/50' : 'bg-gray-50'
                 }`}>
-                  <span className="text-2xl">🔥</span>
+                  <Flame className="w-8 h-8 text-orange-500" />
                   <div>
                     <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       坚持写作 Consistent Writer
@@ -482,7 +484,7 @@ export default function StatsPage() {
                 <div className={`flex items-center gap-3 p-3 rounded-lg ${
                   isDark ? 'bg-gray-700/50' : 'bg-gray-50'
                 }`}>
-                  <span className="text-2xl">⭐</span>
+                  <Star className="w-8 h-8 text-purple-500" />
                   <div>
                     <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       一周连续 Week Streak
@@ -497,7 +499,7 @@ export default function StatsPage() {
                 <div className={`flex items-center gap-3 p-3 rounded-lg ${
                   isDark ? 'bg-gray-700/50' : 'bg-gray-50'
                 }`}>
-                  <span className="text-2xl">📚</span>
+                  <BookMarked className="w-8 h-8 text-blue-500" />
                   <div>
                     <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       万字作家 10K Words

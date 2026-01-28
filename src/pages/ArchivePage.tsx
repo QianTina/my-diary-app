@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDiaryStore } from '../store/diaryStore';
 import { useThemeStore } from '../store/themeStore';
 import { Header } from '../components/Header';
+import { MoodIcon } from '../components/MoodIcon';
 import { 
   Calendar, 
   ChevronDown, 
@@ -15,7 +16,7 @@ import {
   Search,
   X
 } from 'lucide-react';
-import type { Diary, Mood } from '../types';
+import type { Diary } from '../types';
 
 interface GroupedDiaries {
   [year: string]: {
@@ -85,17 +86,6 @@ export default function ArchivePage() {
     setExpandedMonths(newExpanded);
   };
 
-  const getMoodEmoji = (mood: Mood | null) => {
-    const moodMap = {
-      happy: '😊',
-      calm: '😌',
-      neutral: '😐',
-      sad: '😢',
-      angry: '😠',
-    };
-    return mood ? moodMap[mood] : null;
-  };
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('zh-CN', {
@@ -122,8 +112,9 @@ export default function ArchivePage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-            📚 归档 Archive
+          <h1 className={`text-3xl font-bold mb-2 flex items-center gap-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <BookOpen className="w-8 h-8" />
+            归档 Archive
           </h1>
           <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             按时间线浏览所有日记 Browse all diaries by timeline
@@ -321,7 +312,7 @@ export default function ArchivePage() {
                                         {formatDate(diary.createdAt)}
                                       </span>
                                       {diary.mood && (
-                                        <span className="text-lg">{getMoodEmoji(diary.mood)}</span>
+                                        <MoodIcon mood={diary.mood} className="w-5 h-5" />
                                       )}
                                     </div>
 

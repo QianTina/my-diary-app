@@ -7,9 +7,9 @@ import { Header } from '../components/Header';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { Toast } from '../components/Toast';
 import { LoadingOverlay } from '../components/LoadingOverlay';
-import { Search, Plus, Tag, Calendar, MapPin, Thermometer, Edit2, Trash2 } from 'lucide-react';
+import { MoodIcon } from '../components/MoodIcon';
+import { Search, Plus, Tag, Calendar, MapPin, Thermometer, Edit2, Trash2, PenLine, SearchX } from 'lucide-react';
 import MarkdownPreview from '../components/MarkdownPreview';
-import type { Mood } from '../types';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -83,17 +83,6 @@ export default function HomePage() {
       day: 'numeric',
       weekday: 'long',
     });
-  };
-
-  const getMoodEmoji = (moodValue: Mood | null) => {
-    const moodMap = {
-      happy: '😊',
-      calm: '😌',
-      neutral: '😐',
-      sad: '😢',
-      angry: '😠',
-    };
-    return moodValue ? moodMap[moodValue] : null;
   };
 
   const filteredDiaries = getFilteredDiaries();
@@ -235,7 +224,11 @@ export default function HomePage() {
             <div className={`text-center py-20 rounded-2xl border ${
               isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-gray-50 border-gray-200'
             }`}>
-              <p className="text-4xl mb-4">{diaries.length === 0 ? '📝' : '🔍'}</p>
+              {diaries.length === 0 ? (
+                <PenLine className={`w-16 h-16 mx-auto mb-4 ${isDark ? 'text-gray-600' : 'text-gray-400'}`} />
+              ) : (
+                <SearchX className={`w-16 h-16 mx-auto mb-4 ${isDark ? 'text-gray-600' : 'text-gray-400'}`} />
+              )}
               <p className={`text-lg mb-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                 {diaries.length === 0 ? '还没有日记' : '没有找到匹配的日记'}
               </p>
@@ -275,7 +268,9 @@ export default function HomePage() {
                         <span>{formatDate(diary.createdAt)}</span>
                       </div>
                       {diary.mood && (
-                        <span className="text-xl">{getMoodEmoji(diary.mood)}</span>
+                        <div className="flex items-center space-x-1">
+                          <MoodIcon mood={diary.mood} className="w-5 h-5" />
+                        </div>
                       )}
                       {diary.weather && (
                         <div className="flex items-center space-x-1">

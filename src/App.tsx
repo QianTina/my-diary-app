@@ -9,6 +9,9 @@ import SettingsPage from './pages/SettingsPage';
 import StatsPage from './pages/StatsPage';
 import ArchivePage from './pages/ArchivePage';
 import SearchPage from './pages/SearchPage';
+import CalendarPage from './pages/CalendarPage';
+import TaskTestPage from './pages/TaskTestPage';
+import TaskManagementPage from './pages/TaskManagementPage';
 import LoginPage from './pages/auth/LoginPage';
 import { ProfilePage } from './pages/auth/ProfilePage';
 import { useAuthStore } from './store/authStore';
@@ -55,10 +58,13 @@ function App() {
             <Route path="write" element={<WritePage />} />
             <Route path="diary/:id" element={<DiaryDetailPage />} />
             <Route path="search" element={<SearchPage />} />
+            <Route path="calendar" element={<CalendarPage />} />
             <Route path="archive" element={<ArchivePage />} />
             <Route path="stats" element={<StatsPage />} />
             <Route path="settings" element={<SettingsPage />} />
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="tasks" element={<TaskManagementPage />} />
+            <Route path="tasks-test" element={<TaskTestPage />} />
           </Route>
         </Route>
       </Routes>

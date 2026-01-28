@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, Search as SearchIcon } from 'lucide-react';
 import { Header } from '../components/Header';
 import { SearchBar } from '../components/SearchBar';
 import { AdvancedFilters } from '../components/AdvancedFilters';
@@ -137,8 +137,9 @@ export default function SearchPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-            🔍 搜索日记 Search Diaries
+          <h1 className={`text-3xl font-bold mb-2 flex items-center gap-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <SearchIcon className="w-8 h-8" />
+            搜索日记 Search Diaries
           </h1>
           <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             搜索你的日记内容、标签和心情 Search your diary content, tags, and moods

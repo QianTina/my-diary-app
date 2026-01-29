@@ -135,6 +135,7 @@ export interface UpdateTaskInput {
   status?: TaskStatus;
   category_id?: string | null;
   due_date?: string | null;
+  completed_at?: string | null;
 }
 
 /**

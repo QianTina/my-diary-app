@@ -1,0 +1,155 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "create": "Create",
+    "update": "Update",
+    "close": "Close",
+    "clear": "Clear",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "all": "All",
+    "none": "None"
+  },
+  "task": {
+    "title": "Task Management",
+    "subtitle": "Manage your todos and project tasks",
+    "newTask": "New Task",
+    "editTask": "Edit Task",
+    "deleteTask": "Delete Task",
+    "deleteConfirm": "Are you sure you want to delete this task? This action cannot be undone.",
+    "taskDeleted": "Task deleted successfully",
+    "taskCompleted": "Task completed",
+    "taskIncomplete": "Task marked as incomplete",
+    "operationFailed": "Operation failed",
+    "noTasks": "No tasks",
+    "emptyState": "No tasks found. Create your first task to get started!",
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "Enter task title",
+      "titleRequired": "Title is required",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter task description (optional)",
+      "priority": "Priority",
+      "category": "Category",
+      "dueDate": "Due Date",
+      "status": "Status",
+      "createdAt": "Created",
+      "completedAt": "Completed"
+    },
+    "priority": {
+      "high": "High Priority",
+      "medium": "Medium Priority",
+      "low": "Low Priority"
+    },
+    "status": {
+      "complete": "Completed",
+      "incomplete": "To Do",
+      "all": "All Status"
+    },
+    "filter": {
+      "status": "Status",
+      "priority": "Priority",
+      "category": "Category",
+      "dueDate": "Due Date",
+      "search": "Search tasks...",
+      "clearFilters": "Clear Filters",
+      "dueDateOptions": {
+        "all": "All Dates",
+        "overdue": "Overdue",
+        "today": "Today",
+        "week": "This Week",
+        "month": "This Month"
+      }
+    },
+    "view": {
+      "list": "List",
+      "kanban": "Kanban",
+      "groupBy": "Group by",
+      "groupByPriority": "Priority",
+      "groupByStatus": "Status"
+    },
+    "sort": {
+      "priority": "Priority",
+      "dueDate": "Due Date",
+      "createdAt": "Created Date"
+    },
+    "stats": {
+      "title": "Task Statistics",
+      "total": "Total Tasks",
+      "completed": "Completed",
+      "incomplete": "Incomplete",
+      "overdue": "Overdue",
+      "completionRate": "Completion Rate",
+      "dueToday": "Due Today",
+      "dueThisWeek": "Due This Week",
+      "overview": "Overview",
+      "byPriority": "By Priority",
+      "byCategory": "By Category",
+      "noData": "No data available"
+    }
+  },
+  "category": {
+    "title": "Categories",
+    "manage": "Manage Categories",
+    "newCategory": "New Category",
+    "editCategory": "Edit Category",
+    "deleteCategory": "Delete Category",
+    "deleteConfirm": "Are you sure you want to delete this category? Tasks in this category will not be deleted.",
+    "categoryCreated": "Category created successfully",
+    "categoryUpdated": "Category updated successfully",
+    "categoryDeleted": "Category deleted successfully",
+    "noCategories": "No categories",
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Enter category name",
+      "nameRequired": "Name is required",
+      "color": "Color",
+      "taskCount": "{{count}} task",
+      "taskCount_plural": "{{count}} tasks"
+    }
+  },
+  "diary": {
+    "linkedTasks": "Linked Tasks",
+    "linkTask": "Link Task",
+    "unlinkTask": "Unlink Task",
+    "selectTask": "Select a task to link",
+    "noLinkedTasks": "No linked tasks",
+    "taskLinked": "Task linked successfully",
+    "taskUnlinked": "Task unlinked successfully"
+  },
+  "calendar": {
+    "taskIndicator": "{{count}} task",
+    "taskIndicator_plural": "{{count}} tasks",
+    "createTask": "Create Task",
+    "tasksForDate": "Tasks for {{date}}"
+  },
+  "validation": {
+    "titleTooLong": "Title cannot exceed {{max}} characters",
+    "descriptionTooLong": "Description cannot exceed {{max}} characters",
+    "categoryNameTooLong": "Category name cannot exceed {{max}} characters",
+    "invalidDate": "Invalid date format",
+    "required": "This field is required"
+  },
+  "error": {
+    "loadTasks": "Failed to load tasks",
+    "loadCategories": "Failed to load categories",
+    "createTask": "Failed to create task",
+    "updateTask": "Failed to update task",
+    "deleteTask": "Failed to delete task",
+    "createCategory": "Failed to create category",
+    "updateCategory": "Failed to update category",
+    "deleteCategory": "Failed to delete category",
+    "unauthorized": "User not authenticated",
+    "notFound": "Not found",
+    "duplicateCategory": "Category name already exists",
+    "unknown": "An unknown error occurred"
+  }
+}

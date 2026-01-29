@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from './pages/HomePage';
@@ -12,6 +13,9 @@ import SearchPage from './pages/SearchPage';
 import CalendarPage from './pages/CalendarPage';
 import TaskTestPage from './pages/TaskTestPage';
 import TaskManagementPage from './pages/TaskManagementPage';
+import NotebookTestPage from './pages/NotebookTestPage';
+import NotebookListPage from './pages/NotebookListPage';
+import NotebookReaderPage from './pages/NotebookReaderPage';
 import LoginPage from './pages/auth/LoginPage';
 import { ProfilePage } from './pages/auth/ProfilePage';
 import { useAuthStore } from './store/authStore';
@@ -45,9 +49,10 @@ function App() {
   }, [initialize]);
 
   return (
-    <BrowserRouter>
-      <KeyboardShortcuts />
-      <Routes>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <KeyboardShortcuts />
+        <Routes>
         {/* 公共路由 - 登录页面 */}
         <Route path="/login" element={<LoginPage />} />
         
@@ -65,10 +70,14 @@ function App() {
             <Route path="profile" element={<ProfilePage />} />
             <Route path="tasks" element={<TaskManagementPage />} />
             <Route path="tasks-test" element={<TaskTestPage />} />
+            <Route path="notebook-test" element={<NotebookTestPage />} />
+            <Route path="notebooks" element={<NotebookListPage />} />
+            <Route path="notebooks/:notebookId" element={<NotebookReaderPage />} />
           </Route>
         </Route>
       </Routes>
     </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 

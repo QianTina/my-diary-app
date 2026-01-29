@@ -6,6 +6,7 @@
 // 此服务处理所有与 Supabase 相关的任务操作
 
 import { supabase } from '../utils/supabase';
+import { retryWithBackoff, isRetryableError } from '../utils/retry';
 import type {
   Task,
   Category,
@@ -427,6 +428,7 @@ export class TaskService {
       if (input.status !== undefined) updateData.status = input.status;
       if (input.category_id !== undefined) updateData.category_id = input.category_id;
       if (input.due_date !== undefined) updateData.due_date = input.due_date;
+      if (input.completed_at !== undefined) updateData.completed_at = input.completed_at;
 
       // Update task
       const { data, error } = await supabase
@@ -841,8 +843,8 @@ export class TaskService {
         return { data: null, error: this.handleError(error, 'getTasksForDiaryEntry') };
       }
 
-      const tasks = data?.map(item => item.task).filter(Boolean) || [];
-      return { data: tasks as Task[], error: null };
+      const tasks = (data?.map(item => (item as any).task).filter(Boolean) || []) as Task[];
+      return { data: tasks, error: null };
     } catch (error) {
       return { data: null, error: this.handleError(error, 'getTasksForDiaryEntry') };
     }

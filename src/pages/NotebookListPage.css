@@ -1,0 +1,15 @@
+/**
+ * NotebookListPage Styles
+ */
+
+.notebook-list-page {
+  min-height: 100vh;
+  background: var(--bg-secondary, #f5f5f5);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .notebook-list-page {
+    background: var(--bg-secondary, #2a2a2a);
+  }
+}

@@ -1,0 +1,277 @@
+/**
+ * AmbientSoundPlayer Styles
+ * 
+ * Styles for the ambient sound player controls
+ */
+
+.ambient-sound-player {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Toggle button */
+.ambient-sound-player__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem;
+  border: 1px solid var(--border-color, #ddd);
+  background: var(--bg-primary, #fff);
+  color: var(--text-secondary, #666);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ambient-sound-player__toggle:hover {
+  background: var(--bg-secondary, #f5f5f5);
+  border-color: var(--primary-color, #4a90e2);
+  color: var(--primary-color, #4a90e2);
+}
+
+.ambient-sound-player__toggle.active {
+  background: var(--primary-color, #4a90e2);
+  border-color: var(--primary-color, #4a90e2);
+  color: white;
+}
+
+/* Expand button */
+.ambient-sound-player__expand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem;
+  border: 1px solid var(--border-color, #ddd);
+  background: var(--bg-primary, #fff);
+  color: var(--text-secondary, #666);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ambient-sound-player__expand:hover {
+  background: var(--bg-secondary, #f5f5f5);
+  border-color: var(--primary-color, #4a90e2);
+  color: var(--primary-color, #4a90e2);
+}
+
+.ambient-sound-player__current-icon {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 0.875rem;
+  background: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Panel */
+.ambient-sound-player__panel {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  right: 0;
+  width: 320px;
+  background: var(--bg-primary, #fff);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
+  z-index: 100;
+}
+
+/* Title */
+.ambient-sound-player__title {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+}
+
+/* Sound selection */
+.ambient-sound-player__sounds {
+  margin-bottom: 1rem;
+}
+
+.ambient-sound-player__sound-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.ambient-sound-player__sound-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid var(--border-color, #ddd);
+  background: var(--bg-primary, #fff);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ambient-sound-player__sound-button:hover {
+  background: var(--bg-secondary, #f5f5f5);
+  border-color: var(--primary-color, #4a90e2);
+  transform: translateY(-2px);
+}
+
+.ambient-sound-player__sound-button.active {
+  background: rgba(74, 144, 226, 0.1);
+  border-color: var(--primary-color, #4a90e2);
+}
+
+.ambient-sound-player__sound-icon {
+  font-size: 1.5rem;
+}
+
+.ambient-sound-player__sound-name {
+  font-size: 0.8rem;
+  color: var(--text-primary, #1a1a1a);
+  font-weight: 500;
+}
+
+/* Volume control */
+.ambient-sound-player__volume {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color, #ddd);
+}
+
+.ambient-sound-player__volume-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.ambient-sound-player__volume-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-secondary, #f5f5f5);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.ambient-sound-player__volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-color, #4a90e2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ambient-sound-player__volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.ambient-sound-player__volume-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-color, #4a90e2);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.ambient-sound-player__volume-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+.ambient-sound-player__volume-slider:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .ambient-sound-player__panel {
+    width: 280px;
+  }
+
+  .ambient-sound-player__sound-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .ambient-sound-player__toggle,
+  .ambient-sound-player__expand {
+    background: var(--bg-secondary, #2a2a2a);
+    border-color: var(--border-color, #444);
+    color: var(--text-secondary, #aaa);
+  }
+
+  .ambient-sound-player__toggle:hover,
+  .ambient-sound-player__expand:hover {
+    background: var(--bg-tertiary, #3a3a3a);
+    color: var(--primary-color, #4a90e2);
+  }
+
+  .ambient-sound-player__toggle.active {
+    background: var(--primary-color, #4a90e2);
+    border-color: var(--primary-color, #4a90e2);
+    color: white;
+  }
+
+  .ambient-sound-player__current-icon {
+    background: var(--bg-secondary, #2a2a2a);
+  }
+
+  .ambient-sound-player__panel {
+    background: var(--bg-primary, #1a1a1a);
+    border-color: var(--border-color, #444);
+  }
+
+  .ambient-sound-player__title {
+    color: var(--text-primary, #f0f0f0);
+  }
+
+  .ambient-sound-player__sound-button {
+    background: var(--bg-secondary, #2a2a2a);
+    border-color: var(--border-color, #444);
+  }
+
+  .ambient-sound-player__sound-button:hover {
+    background: var(--bg-tertiary, #3a3a3a);
+  }
+
+  .ambient-sound-player__sound-name {
+    color: var(--text-primary, #f0f0f0);
+  }
+
+  .ambient-sound-player__volume {
+    border-top-color: var(--border-color, #444);
+  }
+
+  .ambient-sound-player__volume-label {
+    color: var(--text-primary, #f0f0f0);
+  }
+
+  .ambient-sound-player__volume-slider {
+    background: var(--bg-secondary, #2a2a2a);
+  }
+}
+
+/* Keyboard focus */
+.ambient-sound-player__toggle:focus-visible,
+.ambient-sound-player__expand:focus-visible,
+.ambient-sound-player__sound-button:focus-visible {
+  outline: 2px solid var(--primary-color, #4a90e2);
+  outline-offset: 2px;
+}

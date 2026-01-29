@@ -1,0 +1,153 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "delete": "删除",
+    "edit": "编辑",
+    "save": "保存",
+    "create": "创建",
+    "update": "更新",
+    "close": "关闭",
+    "clear": "清除",
+    "search": "搜索",
+    "filter": "过滤",
+    "sort": "排序",
+    "all": "全部",
+    "none": "无"
+  },
+  "task": {
+    "title": "任务管理",
+    "subtitle": "管理你的待办事项和项目任务",
+    "newTask": "新建任务",
+    "editTask": "编辑任务",
+    "deleteTask": "删除任务",
+    "deleteConfirm": "确定要删除这个任务吗？此操作无法撤销。",
+    "taskDeleted": "任务已删除",
+    "taskCompleted": "任务已完成",
+    "taskIncomplete": "任务标记为未完成",
+    "operationFailed": "操作失败",
+    "noTasks": "暂无任务",
+    "emptyState": "暂无任务。创建你的第一个任务开始吧！",
+    "fields": {
+      "title": "标题",
+      "titlePlaceholder": "输入任务标题",
+      "titleRequired": "标题不能为空",
+      "description": "描述",
+      "descriptionPlaceholder": "输入任务描述（可选）",
+      "priority": "优先级",
+      "category": "分类",
+      "dueDate": "截止日期",
+      "status": "状态",
+      "createdAt": "创建时间",
+      "completedAt": "完成时间"
+    },
+    "priority": {
+      "high": "高优先级",
+      "medium": "中优先级",
+      "low": "低优先级"
+    },
+    "status": {
+      "complete": "已完成",
+      "incomplete": "未完成",
+      "all": "全部状态"
+    },
+    "filter": {
+      "status": "状态",
+      "priority": "优先级",
+      "category": "分类",
+      "dueDate": "截止日期",
+      "search": "搜索任务...",
+      "clearFilters": "清除过滤器",
+      "dueDateOptions": {
+        "all": "全部日期",
+        "overdue": "已过期",
+        "today": "今天",
+        "week": "本周",
+        "month": "本月"
+      }
+    },
+    "view": {
+      "list": "列表",
+      "kanban": "看板",
+      "groupBy": "分组方式",
+      "groupByPriority": "优先级",
+      "groupByStatus": "状态"
+    },
+    "sort": {
+      "priority": "优先级",
+      "dueDate": "截止日期",
+      "createdAt": "创建时间"
+    },
+    "stats": {
+      "title": "任务统计",
+      "total": "总任务数",
+      "completed": "已完成",
+      "incomplete": "未完成",
+      "overdue": "已过期",
+      "completionRate": "完成率",
+      "dueToday": "今天到期",
+      "dueThisWeek": "本周到期",
+      "overview": "总览",
+      "byPriority": "按优先级",
+      "byCategory": "按分类",
+      "noData": "暂无数据"
+    }
+  },
+  "category": {
+    "title": "分类",
+    "manage": "管理分类",
+    "newCategory": "新建分类",
+    "editCategory": "编辑分类",
+    "deleteCategory": "删除分类",
+    "deleteConfirm": "确定要删除这个分类吗？该分类下的任务不会被删除。",
+    "categoryCreated": "分类创建成功",
+    "categoryUpdated": "分类更新成功",
+    "categoryDeleted": "分类删除成功",
+    "noCategories": "暂无分类",
+    "fields": {
+      "name": "名称",
+      "namePlaceholder": "输入分类名称",
+      "nameRequired": "名称不能为空",
+      "color": "颜色",
+      "taskCount": "{{count}} 个任务"
+    }
+  },
+  "diary": {
+    "linkedTasks": "关联任务",
+    "linkTask": "关联任务",
+    "unlinkTask": "取消关联",
+    "selectTask": "选择要关联的任务",
+    "noLinkedTasks": "暂无关联任务",
+    "taskLinked": "任务关联成功",
+    "taskUnlinked": "任务取消关联成功"
+  },
+  "calendar": {
+    "taskIndicator": "{{count}} 个任务",
+    "createTask": "创建任务",
+    "tasksForDate": "{{date}} 的任务"
+  },
+  "validation": {
+    "titleTooLong": "标题不能超过 {{max}} 个字符",
+    "descriptionTooLong": "描述不能超过 {{max}} 个字符",
+    "categoryNameTooLong": "分类名称不能超过 {{max}} 个字符",
+    "invalidDate": "无效的日期格式",
+    "required": "此字段为必填项"
+  },
+  "error": {
+    "loadTasks": "加载任务失败",
+    "loadCategories": "加载分类失败",
+    "createTask": "创建任务失败",
+    "updateTask": "更新任务失败",
+    "deleteTask": "删除任务失败",
+    "createCategory": "创建分类失败",
+    "updateCategory": "更新分类失败",
+    "deleteCategory": "删除分类失败",
+    "unauthorized": "用户未登录",
+    "notFound": "未找到",
+    "duplicateCategory": "分类名称已存在",
+    "unknown": "发生未知错误"
+  }
+}

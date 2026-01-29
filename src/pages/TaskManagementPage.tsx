@@ -3,12 +3,14 @@
 // 任务管理页面
 // ============================================
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, ListTodo, LayoutGrid, BarChart3, Tag } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Header } from '../components/Header';
 import { TaskFilters } from '../components/task/TaskFilters';
 import { TaskListView } from '../components/task/TaskListView';
+import { TaskKanbanView } from '../components/task/TaskKanbanView';
 import { TaskForm } from '../components/task/TaskForm';
 import { TaskStats } from '../components/task/TaskStats';
 import { CategoryManager } from '../components/task/CategoryManager';
@@ -16,6 +18,7 @@ import { ConfirmDialog } from '../components/ConfirmDialog';
 import { Toast } from '../components/Toast';
 import { useThemeStore } from '../store/themeStore';
 import { useTaskStore } from '../store/taskStore';
+import { useKeyboardShortcuts, TASK_SHORTCUTS } from '../hooks/useKeyboardShortcuts';
 import type { TaskWithCategory } from '../types/task';
 
 // ============================================
@@ -23,6 +26,7 @@ import type { TaskWithCategory } from '../types/task';
 // ============================================
 
 export default function TaskManagementPage() {
+  const { t } = useTranslation();
   const isDark = useThemeStore((state) => state.isDark);
   const {
     tasks,
@@ -57,6 +61,40 @@ export default function TaskManagementPage() {
 
   // Sort state
   const [sortBy, setSortBy] = useState<'priority' | 'due_date' | 'created_at'>('created_at');
+
+  // Kanban group by state
+  const [kanbanGroupBy, setKanbanGroupBy] = useState<'priority' | 'status'>('priority');
+
+  // Search input ref for keyboard focus
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts([
+    {
+      key: TASK_SHORTCUTS.NEW_TASK.key,
+      handler: () => handleCreateTask(),
+    },
+    {
+      key: TASK_SHORTCUTS.SEARCH.key,
+      handler: () => searchInputRef.current?.focus(),
+    },
+    {
+      key: TASK_SHORTCUTS.TOGGLE_VIEW.key,
+      handler: () => setViewMode(viewMode === 'list' ? 'kanban' : 'list'),
+    },
+    {
+      key: TASK_SHORTCUTS.TOGGLE_STATS.key,
+      handler: () => setShowStats(!showStats),
+    },
+    {
+      key: TASK_SHORTCUTS.ESCAPE.key,
+      handler: () => {
+        if (isFormOpen) setIsFormOpen(false);
+        if (showCategoryManager) setShowCategoryManager(false);
+        if (deleteDialogOpen) setDeleteDialogOpen(false);
+      },
+    },
+  ]);
 
   // Toast state
   const [toast, setToast] = useState<{
@@ -119,13 +157,13 @@ export default function TaskManagementPage() {
       await deleteTask(deletingTaskId);
       setToast({
         isOpen: true,
-        message: '✅ 任务已删除 Task deleted successfully',
+        message: t('task.taskDeleted'),
         type: 'success',
       });
     } catch (error) {
       setToast({
         isOpen: true,
-        message: '❌ 删除失败 Delete failed',
+        message: t('error.deleteTask'),
         type: 'error',
       });
     } finally {
@@ -141,21 +179,21 @@ export default function TaskManagementPage() {
         await uncompleteTask(taskId);
         setToast({
           isOpen: true,
-          message: '✅ 任务标记为未完成 Task marked as incomplete',
+          message: t('task.taskIncomplete'),
           type: 'success',
         });
       } else {
         await completeTask(taskId);
         setToast({
           isOpen: true,
-          message: '🎉 任务已完成 Task completed',
+          message: t('task.taskCompleted'),
           type: 'success',
         });
       }
     } catch (error) {
       setToast({
         isOpen: true,
-        message: '❌ 操作失败 Operation failed',
+        message: t('task.operationFailed'),
         type: 'error',
       });
     }
@@ -182,10 +220,10 @@ export default function TaskManagementPage() {
             <div>
               <h1 className={`text-3xl font-bold mb-2 flex items-center gap-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 <ListTodo className="w-8 h-8 text-purple-600" />
-                任务管理 Task Management
+                {t('task.title')}
               </h1>
               <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                管理你的待办事项和项目任务 Manage your todos and project tasks
+                {t('task.subtitle')}
               </p>
             </div>
 
@@ -202,7 +240,7 @@ export default function TaskManagementPage() {
                 `}
               >
                 <Tag className="w-4 h-4" />
-                <span className="hidden sm:inline">分类 Categories</span>
+                <span className="hidden sm:inline">{t('category.title')}</span>
               </button>
 
               {/* Statistics Button */}
@@ -219,7 +257,7 @@ export default function TaskManagementPage() {
                 `}
               >
                 <BarChart3 className="w-4 h-4" />
-                <span className="hidden sm:inline">统计 Stats</span>
+                <span className="hidden sm:inline">{t('task.stats.title')}</span>
               </button>
 
               {/* View Mode Toggle */}
@@ -235,10 +273,10 @@ export default function TaskManagementPage() {
                       : 'bg-white text-gray-600 hover:text-gray-900'
                     }
                   `}
-                  aria-label="列表视图 List view"
+                  aria-label={t('task.view.list')}
                 >
                   <ListTodo className="w-4 h-4" />
-                  <span className="hidden sm:inline text-sm">列表 List</span>
+                  <span className="hidden sm:inline text-sm">{t('task.view.list')}</span>
                 </button>
                 <button
                   onClick={() => setViewMode('kanban')}
@@ -251,10 +289,10 @@ export default function TaskManagementPage() {
                       : 'bg-white text-gray-600 hover:text-gray-900'
                     }
                   `}
-                  aria-label="看板视图 Kanban view"
+                  aria-label={t('task.view.kanban')}
                 >
                   <LayoutGrid className="w-4 h-4" />
-                  <span className="hidden sm:inline text-sm">看板 Kanban</span>
+                  <span className="hidden sm:inline text-sm">{t('task.view.kanban')}</span>
                 </button>
               </div>
 
@@ -264,8 +302,8 @@ export default function TaskManagementPage() {
                 className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg flex items-center gap-2 transition-colors"
               >
                 <Plus className="w-4 h-4" />
-                <span className="hidden sm:inline">新建任务 New Task</span>
-                <span className="sm:hidden">新建 New</span>
+                <span className="hidden sm:inline">{t('task.newTask')}</span>
+                <span className="sm:hidden">{t('common.create')}</span>
               </button>
             </div>
           </div>
@@ -309,7 +347,7 @@ export default function TaskManagementPage() {
             <div className="text-center py-16">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
               <p className={isDark ? 'text-gray-400' : 'text-gray-600'}>
-                加载中... Loading...
+                {t('common.loading')}
               </p>
             </div>
           ) : viewMode === 'list' ? (
@@ -322,18 +360,53 @@ export default function TaskManagementPage() {
               onSortChange={setSortBy}
             />
           ) : (
-            <div className={`
-              text-center py-16 rounded-lg border
-              ${isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-gray-50 border-gray-200'}
-            `}>
-              <LayoutGrid className={`w-16 h-16 mx-auto mb-4 ${isDark ? 'text-gray-600' : 'text-gray-400'}`} />
-              <h3 className={`text-lg font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                看板视图开发中 Kanban View Coming Soon
-              </h3>
-              <p className={`text-sm ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
-                看板视图功能即将推出 Kanban view will be available soon
-              </p>
-            </div>
+            <>
+              {/* Kanban Group By Toggle */}
+              <div className="mb-4 flex items-center gap-3">
+                <span className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  {t('task.view.groupBy')}:
+                </span>
+                <div className={`flex items-center rounded-lg border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+                  <button
+                    onClick={() => setKanbanGroupBy('priority')}
+                    className={`
+                      px-3 py-1.5 rounded-l-lg transition-colors text-sm
+                      ${kanbanGroupBy === 'priority'
+                        ? 'bg-purple-600 text-white'
+                        : isDark
+                        ? 'bg-gray-800 text-gray-400 hover:text-white'
+                        : 'bg-white text-gray-600 hover:text-gray-900'
+                      }
+                    `}
+                  >
+                    {t('task.view.groupByPriority')}
+                  </button>
+                  <button
+                    onClick={() => setKanbanGroupBy('status')}
+                    className={`
+                      px-3 py-1.5 rounded-r-lg transition-colors text-sm
+                      ${kanbanGroupBy === 'status'
+                        ? 'bg-purple-600 text-white'
+                        : isDark
+                        ? 'bg-gray-800 text-gray-400 hover:text-white'
+                        : 'bg-white text-gray-600 hover:text-gray-900'
+                      }
+                    `}
+                  >
+                    {t('task.view.groupByStatus')}
+                  </button>
+                </div>
+              </div>
+
+              {/* Kanban View */}
+              <TaskKanbanView
+                tasks={filteredTasks}
+                onEdit={handleEditTask}
+                onDelete={handleDeleteClick}
+                onToggleComplete={handleToggleComplete}
+                groupBy={kanbanGroupBy}
+              />
+            </>
           )}
         </motion.div>
       </div>
@@ -355,10 +428,10 @@ export default function TaskManagementPage() {
       {/* Delete Confirmation Dialog */}
       <ConfirmDialog
         isOpen={deleteDialogOpen}
-        title="删除任务 Delete Task"
-        message="确定要删除这个任务吗？此操作无法撤销。Are you sure you want to delete this task? This action cannot be undone."
-        confirmText="删除 Delete"
-        cancelText="取消 Cancel"
+        title={t('task.deleteTask')}
+        message={t('task.deleteConfirm')}
+        confirmText={t('common.delete')}
+        cancelText={t('common.cancel')}
         variant="danger"
         onConfirm={handleDeleteConfirm}
         onCancel={() => {

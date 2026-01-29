@@ -7,7 +7,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Search, X, Filter, ChevronDown } from 'lucide-react';
 import { useThemeStore } from '../../store/themeStore';
 import { useTaskStore } from '../../store/taskStore';
-import type { TaskFilters as TaskFiltersType, TaskPriority, TaskStatus, DueDateFilter } from '../../types/task';
+import type { TaskFilters as TaskFiltersType } from '../../types/task';
 
 // ============================================
 // Component Props

@@ -1,0 +1,252 @@
+/**
+ * SinglePage Component Styles (Mobile)
+ * 
+ * Styles for the single page view optimized for mobile devices.
+ * Includes touch-friendly interactions and responsive design.
+ */
+
+/* Single page container */
+.single-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  touch-action: pan-y; /* Allow vertical scrolling but handle horizontal swipes */
+}
+
+/* Page container */
+.single-page__container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  animation: single-page-appear 0.4s ease-out;
+}
+
+/* Page appearance animation */
+@keyframes single-page-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Page indicator */
+.single-page__indicator {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.single-page__indicator-current {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.single-page__indicator-separator {
+  color: #9ca3af;
+}
+
+.single-page__indicator-total {
+  color: #6b7280;
+}
+
+/* Swipe hint */
+.single-page__swipe-hint {
+  position: fixed;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  pointer-events: none;
+  opacity: 0;
+  animation: swipe-hint-fade 3s ease-in-out;
+  z-index: 50;
+}
+
+@keyframes swipe-hint-fade {
+  0%, 100% {
+    opacity: 0;
+  }
+  20%, 80% {
+    opacity: 0.6;
+  }
+}
+
+.single-page__swipe-hint-left,
+.single-page__swipe-hint-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.single-page__swipe-hint-left span:first-child,
+.single-page__swipe-hint-right span:last-child {
+  font-size: 20px;
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .single-page__container {
+    max-width: 600px;
+  }
+  
+  .single-page__indicator {
+    bottom: 40px;
+    padding: 14px 28px;
+    font-size: 18px;
+  }
+}
+
+/* Hide on desktop (use PageSpread instead) */
+@media (min-width: 1024px) {
+  .single-page {
+    display: none;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .single-page {
+    padding: 10px;
+  }
+  
+  .single-page__container {
+    max-width: 100%;
+  }
+  
+  .single-page__indicator {
+    bottom: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .single-page__swipe-hint {
+    bottom: 80px;
+    padding: 0 20px;
+  }
+  
+  .single-page__swipe-hint-left,
+  .single-page__swipe-hint-right {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .single-page__indicator {
+    background: rgba(31, 41, 55, 0.95);
+    color: #e5e7eb;
+  }
+  
+  .single-page__indicator-current {
+    color: #60a5fa;
+  }
+  
+  .single-page__indicator-separator {
+    color: #6b7280;
+  }
+  
+  .single-page__indicator-total {
+    color: #9ca3af;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .single-page__container {
+    animation: none;
+  }
+  
+  .single-page__swipe-hint {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 1023px) and (orientation: landscape) {
+  .single-page {
+    min-height: auto;
+    padding: 10px;
+  }
+  
+  .single-page__indicator {
+    bottom: 15px;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .single-page__swipe-hint {
+    display: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .single-page {
+    display: block;
+    min-height: auto;
+    page-break-after: always;
+  }
+  
+  .single-page__indicator,
+  .single-page__swipe-hint {
+    display: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .single-page__indicator {
+    background: #ffffff;
+    border: 2px solid #000000;
+  }
+  
+  .single-page__indicator-current {
+    color: #000000;
+  }
+}
+
+/* Focus styles for accessibility */
+.single-page:focus-within {
+  outline: 3px solid #3b82f6;
+  outline-offset: 4px;
+}
+
+/* Touch feedback */
+.single-page__container:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}

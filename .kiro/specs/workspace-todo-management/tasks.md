@@ -97,11 +97,11 @@ This implementation plan breaks down the workspace todo management feature into 
     - **Property 18: Invalid Date Rejection**
     - **Validates: Requirements 4.1, 4.2, 4.3, 4.4, 4.5, 4.6**
 
-- [ ] 6. Checkpoint - Ensure all service tests pass
+- [x] 6. Checkpoint - Ensure all service tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 7. Implement task filtering and search
-  - [ ] 7.1 Create filter logic in TaskService
+- [x] 7. Implement task filtering and search
+  - [x] 7.1 Create filter logic in TaskService
     - Implement status filtering
     - Implement priority filtering
     - Implement category filtering
@@ -116,8 +116,8 @@ This implementation plan breaks down the workspace todo management feature into 
     - **Property 24: Search Query Matching**
     - **Validates: Requirements 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7**
 
-- [ ] 8. Implement task statistics
-  - [ ] 8.1 Create statistics calculation in TaskService
+- [x] 8. Implement task statistics
+  - [x] 8.1 Create statistics calculation in TaskService
     - Calculate total, completed, incomplete, overdue counts
     - Calculate completion rate percentage
     - Group statistics by priority and category
@@ -129,8 +129,8 @@ This implementation plan breaks down the workspace todo management feature into 
     - **Property 37: Statistics Date Range Filtering**
     - **Validates: Requirements 14.1, 14.2, 14.3, 14.4, 14.5, 14.6**
 
-- [ ] 9. Implement diary link operations
-  - [ ] 9.1 Create diary link CRUD in TaskService
+- [x] 9. Implement diary link operations
+  - [x] 9.1 Create diary link CRUD in TaskService
     - Implement linkTaskToDiary (create bidirectional link)
     - Implement unlinkTaskFromDiary
     - Implement getTasksForDiaryEntry
@@ -145,7 +145,7 @@ This implementation plan breaks down the workspace todo management feature into 
     - **Property 31: Task Multiple Diary Links**
     - **Validates: Requirements 9.1, 9.2, 9.3, 9.4, 9.5, 9.6**
 
-- [ ] 10. Checkpoint - Ensure all service and integration tests pass
+- [x] 10. Checkpoint - Ensure all service and integration tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 - [x] 11. Create Zustand store for task state management
@@ -234,7 +234,7 @@ This implementation plan breaks down the workspace todo management feature into 
     - Test responsive layout
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.7_
 
-- [-] 14. Create task list and kanban views
+- [x] 14. Create task list and kanban views
   - [x] 14.1 Create TaskListView component
     - Display tasks in vertical list format
     - Use virtual scrolling for > 50 tasks
@@ -251,7 +251,7 @@ This implementation plan breaks down the workspace todo management feature into 
     - Test responsive layout
     - _Requirements: 7.1, 7.4, 11.1, 11.2, 11.3_
 
-  - [ ] 14.3 Create TaskKanbanView component
+  - [x] 14.3 Create TaskKanbanView component
     - Display tasks in columns (by priority or status)
     - Implement drag-and-drop with react-beautiful-dnd or dnd-kit
     - Update task priority/status on drop
@@ -302,7 +302,7 @@ This implementation plan breaks down the workspace todo management feature into 
     - Test validation
     - _Requirements: 2.1, 2.4, 2.7_
 
-- [ ] 17. Checkpoint - Ensure all UI tests pass
+- [x] 17. Checkpoint - Ensure all UI tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 - [x] 18. Implement calendar integration
@@ -358,8 +358,8 @@ This implementation plan breaks down the workspace todo management feature into 
     - Test responsive layout
     - _Requirements: 14.1, 14.2, 14.3, 14.4, 14.5, 14.6_
 
-- [ ] 21. Add internationalization (i18n)
-  - [ ] 21.1 Set up i18next configuration
+- [x] 21. Add internationalization (i18n)
+  - [x] 21.1 Set up i18next configuration
     - Install i18next and react-i18next
     - Create translation files (en.json, zh.json)
     - Configure language detection
@@ -367,7 +367,7 @@ This implementation plan breaks down the workspace todo management feature into 
     - Add language switcher component
     - _Requirements: 13.1, 13.2, 13.3_
 
-  - [ ] 21.2 Add translations for all UI text
+  - [x] 21.2 Add translations for all UI text
     - Translate task management page
     - Translate forms and validation messages
     - Translate filters and buttons
@@ -379,8 +379,8 @@ This implementation plan breaks down the workspace todo management feature into 
     - **Property 35: Language Switch Preserves Task Content**
     - **Validates: Requirements 13.4**
 
-- [ ] 22. Implement error handling and retry logic
-  - [ ] 22.1 Add error handling to TaskService
+- [x] 22. Implement error handling and retry logic
+  - [x] 22.1 Add error handling to TaskService
     - Implement retry logic with exponential backoff (3 attempts)
     - Handle network errors
     - Handle validation errors
@@ -388,7 +388,7 @@ This implementation plan breaks down the workspace todo management feature into 
     - Return structured error responses
     - _Requirements: 16.2, 16.3_
 
-  - [ ] 22.2 Add error display to UI
+  - [x] 22.2 Add error display to UI
     - Create ErrorMessage component
     - Display validation errors in forms
     - Display network errors with retry option
@@ -402,14 +402,14 @@ This implementation plan breaks down the workspace todo management feature into 
     - Test error recovery
     - _Requirements: 16.2, 16.3_
 
-- [ ] 23. Add performance optimizations
-  - [ ] 23.1 Implement caching in Zustand store
+- [x] 23. Add performance optimizations
+  - [x] 23.1 Implement caching in Zustand store
     - Cache task list with 5-minute TTL
     - Cache categories
     - Invalidate cache on mutations
     - _Requirements: 15.4, 15.5_
 
-  - [ ] 23.2 Optimize React components
+  - [x] 23.2 Optimize React components
     - Add React.memo to TaskCard
     - Use useMemo for filtered tasks
     - Use useCallback for event handlers
@@ -423,15 +423,15 @@ This implementation plan breaks down the workspace todo management feature into 
     - Test filter performance
     - _Requirements: 15.1, 15.2, 15.3_
 
-- [ ] 24. Add accessibility improvements
-  - [ ] 24.1 Enhance keyboard navigation
+- [x] 24. Add accessibility improvements
+  - [x] 24.1 Enhance keyboard navigation
     - Add keyboard shortcuts (n for new task, / for search, etc.)
     - Ensure all interactive elements are keyboard accessible
     - Add focus management for modals and forms
     - Add skip links
     - _Requirements: 11.4_
 
-  - [ ] 24.2 Enhance screen reader support
+  - [x] 24.2 Enhance screen reader support
     - Add ARIA labels to all interactive elements
     - Add ARIA live regions for dynamic updates
     - Use semantic HTML throughout
@@ -445,15 +445,15 @@ This implementation plan breaks down the workspace todo management feature into 
     - Verify WCAG AA compliance
     - _Requirements: 11.4, 11.5, 11.6_
 
-- [ ] 25. Final checkpoint - End-to-end testing
-  - [ ] 25.1 Run full test suite
+- [x] 25. Final checkpoint - End-to-end testing
+  - [x] 25.1 Run full test suite
     - Run all unit tests
     - Run all property-based tests
     - Run all integration tests
     - Verify test coverage > 80%
     - _Requirements: All requirements_
 
-  - [ ] 25.2 Manual testing checklist
+  - [x] 25.2 Manual testing checklist
     - Test task creation, editing, deletion
     - Test category management
     - Test filtering and search
@@ -466,22 +466,22 @@ This implementation plan breaks down the workspace todo management feature into 
     - Test accessibility
     - _Requirements: All requirements_
 
-  - [ ] 25.3 Performance verification
+  - [x] 25.3 Performance verification
     - Test with 100+ tasks
     - Verify initial load < 2 seconds
     - Verify operation feedback < 100ms
     - Test on mobile devices
     - _Requirements: 15.1, 15.2_
 
-- [ ] 26. Documentation and cleanup
-  - [ ] 26.1 Add code documentation
+- [x] 26. Documentation and cleanup
+  - [x] 26.1 Add code documentation
     - Document TaskService methods with JSDoc
     - Document Zustand store actions
     - Document component props with TypeScript
     - Add README for task management feature
     - _Requirements: All requirements_
 
-  - [ ] 26.2 Code cleanup
+  - [x] 26.2 Code cleanup
     - Remove console.logs
     - Remove unused imports
     - Format code with Prettier

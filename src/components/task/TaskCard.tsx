@@ -3,7 +3,7 @@
 // 任务卡片组件
 // ============================================
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { motion } from 'framer-motion';
 import { 
   CheckCircle2, 
@@ -13,10 +13,8 @@ import {
   Calendar,
   Tag as TagIcon,
   AlertCircle,
-  Link as LinkIcon,
 } from 'lucide-react';
 import { useThemeStore } from '../../store/themeStore';
-import { useTaskStore } from '../../store/taskStore';
 import type { TaskWithCategory } from '../../types/task';
 import { PRIORITY_CONFIG } from '../../types/task';
 
@@ -28,7 +26,7 @@ interface TaskCardProps {
   showActions?: boolean;
 }
 
-export function TaskCard({
+export const TaskCard = memo(function TaskCard({
   task,
   onEdit,
   onDelete,
@@ -241,4 +239,4 @@ export function TaskCard({
       )}
     </motion.div>
   );
-}
+});

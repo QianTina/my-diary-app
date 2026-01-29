@@ -1,0 +1,216 @@
+/**
+ * PageSpread Component Styles (Desktop)
+ * 
+ * Styles for the two-page spread view with book spine.
+ * Optimized for desktop viewports (min-width: 1024px).
+ */
+
+/* Page spread container */
+.page-spread {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  perspective: 2000px;
+}
+
+/* Left page container */
+.page-spread__left {
+  flex: 0 0 auto;
+  transform-origin: right center;
+  animation: page-spread-left-appear 0.6s ease-out;
+}
+
+/* Right page container */
+.page-spread__right {
+  flex: 0 0 auto;
+  transform-origin: left center;
+  animation: page-spread-right-appear 0.6s ease-out;
+}
+
+/* Book spine */
+.page-spread__spine {
+  position: relative;
+  width: 40px;
+  height: 700px;
+  background: linear-gradient(
+    to right,
+    #d1d5db 0%,
+    #e5e7eb 20%,
+    #f3f4f6 50%,
+    #e5e7eb 80%,
+    #d1d5db 100%
+  );
+  box-shadow: 
+    inset 2px 0 8px rgba(0, 0, 0, 0.1),
+    inset -2px 0 8px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(0, 0, 0, 0.05);
+  z-index: 5;
+  flex-shrink: 0;
+}
+
+/* Spine shadow (left side) */
+.page-spread__spine-shadow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.15),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Spine highlight (right side) */
+.page-spread__spine-highlight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.15),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Appearance animations */
+@keyframes page-spread-left-appear {
+  from {
+    opacity: 0;
+    transform: rotateY(-15deg) translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0deg) translateX(0);
+  }
+}
+
+@keyframes page-spread-right-appear {
+  from {
+    opacity: 0;
+    transform: rotateY(15deg) translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0deg) translateX(0);
+  }
+}
+
+/* Hover effects */
+.page-spread__left:hover {
+  transform: translateX(-5px);
+  transition: transform 0.3s ease;
+}
+
+.page-spread__right:hover {
+  transform: translateX(5px);
+  transition: transform 0.3s ease;
+}
+
+/* Enhanced shadows on hover */
+.page-spread:hover .page-spread__left .page {
+  box-shadow: -5px 5px 30px rgba(0, 0, 0, 0.15);
+}
+
+.page-spread:hover .page-spread__right .page {
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments for smaller desktops */
+@media (max-width: 1280px) {
+  .page-spread {
+    max-width: 1000px;
+  }
+  
+  .page-spread__spine {
+    width: 30px;
+    height: 600px;
+  }
+}
+
+/* Hide on tablets and mobile (use SinglePage instead) */
+@media (max-width: 1023px) {
+  .page-spread {
+    display: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .page-spread__spine {
+    background: linear-gradient(
+      to right,
+      #374151 0%,
+      #4b5563 20%,
+      #6b7280 50%,
+      #4b5563 80%,
+      #374151 100%
+    );
+  }
+  
+  .page-spread__spine-shadow,
+  .page-spread__spine-highlight {
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.3),
+      transparent
+    );
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .page-spread__left,
+  .page-spread__right {
+    animation: none;
+  }
+  
+  .page-spread__left:hover,
+  .page-spread__right:hover {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .page-spread {
+    display: flex;
+    page-break-after: always;
+  }
+  
+  .page-spread__spine {
+    display: none;
+  }
+  
+  .page-spread__left,
+  .page-spread__right {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .page-spread__spine {
+    background: #000000;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+  }
+}
+
+/* Focus styles for accessibility */
+.page-spread:focus-within {
+  outline: 3px solid #3b82f6;
+  outline-offset: 8px;
+  border-radius: 8px;
+}

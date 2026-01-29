@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plus, Edit2, Trash2, Tag, Palette } from 'lucide-react';
+import { X, Plus, Edit2, Trash2, Tag } from 'lucide-react';
 import { useThemeStore } from '../../store/themeStore';
 import { useTaskStore } from '../../store/taskStore';
 import { ConfirmDialog } from '../ConfirmDialog';

@@ -1,0 +1,309 @@
+/**
+ * NotebookListView Styles
+ * 
+ * Styles for the notebook list/grid view with search and controls
+ */
+
+.notebook-list-view {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Header */
+.notebook-list-view__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.notebook-list-view__title-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+.notebook-list-view__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.notebook-list-view__subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary, #666);
+  margin: 0;
+}
+
+.notebook-list-view__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Search bar */
+.notebook-list-view__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 250px;
+}
+
+.notebook-list-view__search-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--text-secondary, #666);
+  pointer-events: none;
+}
+
+.notebook-list-view__search-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: var(--bg-primary, #fff);
+  color: var(--text-primary, #1a1a1a);
+  transition: all 0.2s ease;
+}
+
+.notebook-list-view__search-input:focus {
+  outline: none;
+  border-color: var(--primary-color, #4a90e2);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+/* View toggle */
+.notebook-list-view__view-toggle {
+  display: flex;
+  gap: 0.25rem;
+  background: var(--bg-secondary, #f5f5f5);
+  padding: 0.25rem;
+  border-radius: 8px;
+}
+
+.notebook-list-view__view-button {
+  padding: 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary, #666);
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.notebook-list-view__view-button:hover {
+  background: var(--bg-primary, #fff);
+  color: var(--text-primary, #1a1a1a);
+}
+
+.notebook-list-view__view-button.active {
+  background: var(--bg-primary, #fff);
+  color: var(--primary-color, #4a90e2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Create button */
+.notebook-list-view__create-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: var(--primary-color, #4a90e2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notebook-list-view__create-button:hover {
+  background: var(--primary-color-dark, #357abd);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+.notebook-list-view__create-button:active {
+  transform: translateY(0);
+}
+
+/* Error state */
+.notebook-list-view__error {
+  padding: 1.5rem;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  color: #c33;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.notebook-list-view__error button {
+  margin-top: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: #c33;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.notebook-list-view__error button:hover {
+  background: #a22;
+}
+
+/* Loading state */
+.notebook-list-view__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary, #666);
+}
+
+.notebook-list-view__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color, #ddd);
+  border-top-color: var(--primary-color, #4a90e2);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Empty state */
+.notebook-list-view__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary, #666);
+  text-align: center;
+}
+
+.notebook-list-view__empty p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.notebook-list-view__empty button {
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-color, #4a90e2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notebook-list-view__empty button:hover {
+  background: var(--primary-color-dark, #357abd);
+}
+
+/* Grid layout */
+.notebook-list-view__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* List layout */
+.notebook-list-view__grid--list {
+  grid-template-columns: 1fr;
+  max-width: 800px;
+}
+
+/* Delete confirmation */
+.notebook-list-view__delete-confirm {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  color: #856404;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .notebook-list-view {
+    padding: 1rem;
+  }
+
+  .notebook-list-view__header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .notebook-list-view__title {
+    font-size: 1.5rem;
+  }
+
+  .notebook-list-view__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .notebook-list-view__search {
+    min-width: 100%;
+  }
+
+  .notebook-list-view__view-toggle {
+    align-self: flex-start;
+  }
+
+  .notebook-list-view__grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .notebook-list-view__title {
+    color: var(--text-primary, #f0f0f0);
+  }
+
+  .notebook-list-view__subtitle {
+    color: var(--text-secondary, #aaa);
+  }
+
+  .notebook-list-view__search-input {
+    background: var(--bg-primary, #2a2a2a);
+    color: var(--text-primary, #f0f0f0);
+    border-color: var(--border-color, #444);
+  }
+
+  .notebook-list-view__view-toggle {
+    background: var(--bg-secondary, #1a1a1a);
+  }
+
+  .notebook-list-view__view-button:hover {
+    background: var(--bg-primary, #2a2a2a);
+    color: var(--text-primary, #f0f0f0);
+  }
+
+  .notebook-list-view__view-button.active {
+    background: var(--bg-primary, #2a2a2a);
+  }
+}

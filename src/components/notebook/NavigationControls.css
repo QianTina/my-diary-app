@@ -1,0 +1,200 @@
+/**
+ * NavigationControls Styles
+ * 
+ * Styles for the notebook reader navigation controls
+ */
+
+.navigation-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: var(--bg-primary, #fff);
+  border-top: 1px solid var(--border-color, #ddd);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+/* Sections */
+.navigation-controls__section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navigation-controls__section--left,
+.navigation-controls__section--right {
+  flex: 0 0 auto;
+}
+
+.navigation-controls__section--center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* Buttons */
+.navigation-controls__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem;
+  border: 1px solid var(--border-color, #ddd);
+  background: var(--bg-primary, #fff);
+  color: var(--text-primary, #1a1a1a);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navigation-controls__button:hover:not(:disabled) {
+  background: var(--bg-secondary, #f5f5f5);
+  border-color: var(--primary-color, #4a90e2);
+  color: var(--primary-color, #4a90e2);
+  transform: translateY(-1px);
+}
+
+.navigation-controls__button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.navigation-controls__button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Navigation buttons (prev/next) */
+.navigation-controls__button--nav {
+  padding: 0.75rem;
+  min-width: 48px;
+}
+
+/* Action buttons (date, TOC, bookmarks) */
+.navigation-controls__button--action {
+  padding: 0.625rem;
+  min-width: 44px;
+}
+
+/* Page indicator */
+.navigation-controls__page-indicator {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text-primary, #1a1a1a);
+  user-select: none;
+}
+
+.navigation-controls__current-page {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color, #4a90e2);
+}
+
+.navigation-controls__separator {
+  color: var(--text-secondary, #666);
+}
+
+.navigation-controls__total-pages {
+  color: var(--text-secondary, #666);
+}
+
+/* Actions */
+.navigation-controls__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navigation-controls {
+    padding: 0.75rem 1rem;
+  }
+
+  .navigation-controls__section--center {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .navigation-controls__page-indicator {
+    font-size: 1rem;
+  }
+
+  .navigation-controls__current-page {
+    font-size: 1.25rem;
+  }
+
+  .navigation-controls__button--nav {
+    padding: 0.625rem;
+    min-width: 44px;
+  }
+
+  .navigation-controls__button--action {
+    padding: 0.5rem;
+    min-width: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation-controls {
+    padding: 0.5rem;
+  }
+
+  .navigation-controls__section {
+    gap: 0.5rem;
+  }
+
+  .navigation-controls__actions {
+    gap: 0.25rem;
+  }
+
+  .navigation-controls__button {
+    padding: 0.5rem;
+  }
+
+  .navigation-controls__button--nav {
+    min-width: 40px;
+  }
+
+  .navigation-controls__button--action {
+    min-width: 36px;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .navigation-controls {
+    background: var(--bg-primary, #1a1a1a);
+    border-top-color: var(--border-color, #333);
+  }
+
+  .navigation-controls__button {
+    background: var(--bg-secondary, #2a2a2a);
+    color: var(--text-primary, #f0f0f0);
+    border-color: var(--border-color, #444);
+  }
+
+  .navigation-controls__button:hover:not(:disabled) {
+    background: var(--bg-tertiary, #3a3a3a);
+  }
+
+  .navigation-controls__page-indicator {
+    color: var(--text-primary, #f0f0f0);
+  }
+
+  .navigation-controls__separator,
+  .navigation-controls__total-pages {
+    color: var(--text-secondary, #aaa);
+  }
+}
+
+/* Keyboard focus */
+.navigation-controls__button:focus-visible {
+  outline: 2px solid var(--primary-color, #4a90e2);
+  outline-offset: 2px;
+}
